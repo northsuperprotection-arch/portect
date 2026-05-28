@@ -4,571 +4,445 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>North Protection</title>
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
--webkit-tap-highlight-color:transparent;
-}
-
-:root{
---blue:#2563EB;
---cyan:#22D3EE;
---green:#22C55E;
---red:#EF4444;
---gray:#94A3B8;
---shadow:0 10px 40px rgba(0,0,0,.5);
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{
-background:
-radial-gradient(circle at top left, rgba(37,99,235,.18), transparent 25%),
-radial-gradient(circle at bottom right, rgba(34,211,238,.12), transparent 25%),
-linear-gradient(135deg,#020202,#07111d,#020202);
+background:#050816;
 color:white;
-height:100vh;
 overflow:hidden;
 }
-
-.cyber-bg{
+.bg{
 position:fixed;
 inset:0;
-overflow:hidden;
-z-index:0;
+background:
+radial-gradient(circle at top left,#1e3a8a55,transparent 30%),
+radial-gradient(circle at bottom right,#06b6d455,transparent 30%),
+#050816;
 }
-
-.grid{
-position:absolute;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-background-size:40px 40px;
-animation:gridMove 15s linear infinite;
-}
-
-@keyframes gridMove{
-from{transform:translateY(0);}to{transform:translateY(40px);}
-}
-
-.glow{
-position:absolute;
-border-radius:50%;
-filter:blur(120px);
-opacity:.18;
-}
-
-.glow1{
-width:400px;
-height:400px;
-background:#2563EB;
-top:-100px;
-left:-100px;
-}
-
-.glow2{
-width:350px;
-height:350px;
-background:#22D3EE;
-bottom:-100px;
-right:-100px;
-}
-
-#splash{
-position:fixed;
-inset:0;
-z-index:1000;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:linear-gradient(135deg,#010101,#08111e,#010101);
-transition:1s;
-}
-
-.shield{
-width:120px;
-height:120px;
-border-radius:30px;
-border:2px solid rgba(34,211,238,.5);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:54px;
-color:var(--cyan);
-box-shadow:0 0 40px rgba(34,211,238,.4), inset 0 0 20px rgba(34,211,238,.2);
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%,100%{transform:scale(1);}50%{transform:scale(1.08);}
-}
-
-.logo{
-margin-top:28px;
-font-size:2rem;
-font-weight:700;
-letter-spacing:3px;
-}
-
-.loading{
-margin-top:18px;
-font-size:.9rem;
-color:var(--gray);
-}
-
-.loader{
-margin-top:22px;
-width:220px;
-height:6px;
-background:rgba(255,255,255,.05);
-border-radius:999px;
-overflow:hidden;
-}
-
-.loader span{
-display:block;
-height:100%;
-width:40%;
-background:linear-gradient(90deg,var(--blue),var(--cyan));
-animation:load 2s infinite;
-}
-
-@keyframes load{
-0%{transform:translateX(-100%);}100%{transform:translateX(400%);}
-}
-
 .app{
 position:relative;
 z-index:2;
-width:100%;
 height:100vh;
-display:none;
-overflow:hidden;
+display:flex;
+flex-direction:column;
 }
-
-.screen{
-position:absolute;
-inset:0;
-overflow-y:auto;
+header{
 padding:20px;
-padding-bottom:100px;
-display:none;
-}
-
-.screen.active{
-display:block;
-animation:fade .5s ease;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}
-}
-
-.card{
-background:rgba(11,17,32,.55);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(18px);
-border-radius:24px;
-padding:20px;
-margin-bottom:18px;
-box-shadow:var(--shadow);
-}
-
-.section-title{
-font-size:1.2rem;
-margin-bottom:18px;
-font-weight:700;
-}
-
-.topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+background:rgba(0,0,0,.2);
 }
-
-.brand{
-font-size:1.2rem;
+.logo{
+font-size:1.3rem;
 font-weight:700;
+letter-spacing:2px;
 }
-
 .live{
+color:#22c55e;
+font-size:.9rem;
+animation:pulse 1s infinite;
+}
+@keyframes pulse{
+50%{opacity:.5}
+}
+.content{
+flex:1;
+overflow:auto;
+padding:20px;
+padding-bottom:100px;
+}
+.card{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:20px;
+margin-bottom:20px;
+backdrop-filter:blur(14px);
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.title{
+font-size:1.2rem;
+margin-bottom:15px;
+}
+.score{
+font-size:4rem;
+font-weight:800;
+background:linear-gradient(90deg,#38bdf8,#ffffff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+.stat{
+background:rgba(255,255,255,.04);
+padding:18px;
+border-radius:18px;
+}
+.stat small{
+color:#94a3b8;
+display:block;
+margin-bottom:8px;
+}
+.stat strong{
+font-size:1.3rem;
+}
+.feed{
+height:220px;
+overflow:auto;
+}
+.feed-item{
+padding:12px;
+margin-bottom:10px;
+background:rgba(255,255,255,.04);
+border-radius:14px;
+font-size:.92rem;
+animation:fade .5s;
+}
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+.profile{
 display:flex;
 align-items:center;
-gap:8px;
-font-size:.85rem;
-color:var(--green);
+gap:15px;
 }
-
-.dot{
-width:10px;
-height:10px;
+.avatar{
+width:70px;
+height:70px;
 border-radius:50%;
-background:var(--green);
-box-shadow:0 0 12px var(--green);
-animation:blink 1s infinite;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.6rem;
+font-weight:700;
 }
-
-@keyframes blink{50%{opacity:.4;}}
-
 input,select{
 width:100%;
-padding:16px;
-margin-bottom:14px;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.04);
-color:white;
-font-size:1rem;
-outline:none;
-}
-
-button{
+padding:14px;
+margin-top:10px;
 border:none;
-cursor:pointer;
-padding:16px;
-border-radius:18px;
-font-size:1rem;
-font-weight:600;
-width:100%;
-transition:.3s;
-}
-
-.primary{
-background:linear-gradient(135deg,var(--blue),var(--cyan));
+border-radius:14px;
+background:rgba(255,255,255,.06);
 color:white;
 }
-
-.bottom-nav{
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+border:none;
+border-radius:16px;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+.bottom{
 position:fixed;
 bottom:0;
 left:0;
 right:0;
-height:78px;
-background:rgba(5,5,5,.88);
-backdrop-filter:blur(18px);
-border-top:1px solid rgba(255,255,255,.05);
+height:75px;
 display:flex;
 justify-content:space-around;
 align-items:center;
-z-index:50;
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(16px);
+border-top:1px solid rgba(255,255,255,.08);
 }
-
-.nav-btn{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-font-size:.72rem;
-color:var(--gray);
+.nav{
+text-align:center;
+font-size:.75rem;
+color:#94a3b8;
 cursor:pointer;
 }
-
-.nav-btn.active{
-color:var(--cyan);
+.nav.active{
+color:#38bdf8;
 }
-
-.toast{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(11,17,32,.95);
-padding:16px 20px;
+.screen{display:none}
+.screen.active{display:block}
+canvas{
+width:100%;
+height:200px;
+background:rgba(255,255,255,.03);
 border-radius:18px;
-border:1px solid rgba(34,211,238,.2);
-z-index:999;
-display:none;
 }
-
-.social-item,.device-card{
-padding:18px;
-border-radius:20px;
-margin-bottom:14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.05);
-}
-
-.status-green{color:var(--green);}
-.status-red{color:var(--red);}
-
-.stat-box{
-background:rgba(255,255,255,.03);
-padding:18px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.stat-box h3{
-font-size:.8rem;
+.notice{
+padding:14px;
+border-radius:14px;
+background:rgba(239,68,68,.12);
 margin-bottom:10px;
-color:#94A3B8;
 }
-
-.stat-box h1{
-font-size:2rem;
-margin-bottom:6px;
-}
-
-.network-map{
-position:relative;
-height:220px;
-border-radius:24px;
-overflow:hidden;
-background:radial-gradient(circle at center, rgba(34,211,238,.08), transparent 70%);
-border:1px solid rgba(255,255,255,.05);
-}
-
-.pulse{
-position:absolute;
-width:14px;
-height:14px;
-border-radius:50%;
-background:#22D3EE;
-box-shadow:0 0 20px #22D3EE;
-animation:pulseMap 2s infinite;
-}
-
-.p1{top:30%;left:20%;}
-.p2{top:50%;left:50%;}
-.p3{top:35%;right:20%;}
-.p4{bottom:25%;left:40%;}
-
-@keyframes pulseMap{
-0%{transform:scale(1);opacity:1;}100%{transform:scale(3);opacity:0;}
-}
-
-#terminal{
-height:220px;
-overflow:hidden;
-background:#02060c;
-border-radius:20px;
-padding:18px;
-font-family:monospace;
-font-size:.88rem;
-border:1px solid rgba(34,211,238,.08);
-}
-
-.terminal-line{
-margin-bottom:10px;
-color:#22D3EE;
-}
-
 </style>
 </head>
 <body>
 
-<div class="cyber-bg">
-<div class="grid"></div>
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
-</div>
+<div class="bg"></div>
 
-<div id="splash">
-<div class="shield">🛡</div>
+<div class="app">
+
+<header>
 <div class="logo">NORTH PROTECTION</div>
-<div class="loading" id="loadingText">Initializing Secure Environment</div>
-<div class="loader"><span></span></div>
-</div>
+<div class="live">● LIVE</div>
+</header>
 
-<div class="app" id="app">
+<div class="content">
 
-<section class="screen active" id="dashboard">
-
-<div class="topbar">
-<div class="brand">North Protection</div>
-<div class="live"><div class="dot"></div>LIVE MONITORING</div>
-</div>
+<div id="dashboard" class="screen active">
 
 <div class="card">
-<div class="section-title">Security Status</div>
-<h1 style="font-size:4rem;margin-bottom:10px;">98</h1>
-<div class="status-green">ALL SYSTEMS SECURE</div>
+<div class="title">Security Score</div>
+<div class="score" id="score">98</div>
 </div>
 
-<div class="card">
-<div class="section-title">AI Threat Intelligence</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-<div class="stat-box"><h3>Threats Blocked</h3><h1 id="threatsBlocked">248</h1><p class="status-green">+12 Today</p></div>
-<div class="stat-box"><h3>Encrypted Sessions</h3><h1 id="encryptedSessions">92</h1><p class="status-green">ACTIVE</p></div>
-<div class="stat-box"><h3>Credential Risk</h3><h1 class="status-green">LOW</h1><p>Protected</p></div>
-<div class="stat-box"><h3>Dark Web Scan</h3><h1>99%</h1><p class="status-green">CLEAN</p></div>
-</div>
+<div class="grid">
+<div class="stat">
+<small>Threats Blocked</small>
+<strong id="threats">128</strong>
 </div>
 
-<div class="card">
-<div class="section-title">Global Security Network</div>
-<div class="network-map">
-<div class="pulse p1"></div>
-<div class="pulse p2"></div>
-<div class="pulse p3"></div>
-<div class="pulse p4"></div>
+<div class="stat">
+<small>Protected Devices</small>
+<strong>12</strong>
+</div>
+
+<div class="stat">
+<small>VPN Status</small>
+<strong style="color:#22c55e">ACTIVE</strong>
+</div>
+
+<div class="stat">
+<small>Dark Web Scan</small>
+<strong style="color:#22c55e">SECURE</strong>
 </div>
 </div>
 
 <div class="card">
-<div class="section-title">Live Security Terminal</div>
-<div id="terminal">
-<div class="terminal-line">> Initializing AI protection layer...</div>
+<div class="title">Threat Activity</div>
+<canvas id="chart"></canvas>
 </div>
-</div>
-
-</section>
-
-<section class="screen" id="socialScreen">
-<div class="topbar"><div class="brand">Social Monitoring</div></div>
 
 <div class="card">
-<div class="section-title">Add Social Account</div>
-<select id="socialPlatform">
+<div class="title">Live Monitoring Feed</div>
+<div class="feed" id="feed"></div>
+</div>
+
+</div>
+
+<div id="accounts" class="screen">
+
+<div class="card">
+<div class="title">Connected Accounts</div>
+
+<select id="platform">
 <option>Instagram</option>
 <option>Facebook</option>
-<option>TikTok</option>
 <option>Discord</option>
 <option>Telegram</option>
-<option>LinkedIn</option>
+<option>TikTok</option>
 </select>
-<input type="text" id="socialLogin" placeholder="Account Login">
-<input type="password" id="socialPassword" placeholder="Account Password">
-<button class="primary" onclick="addSocialAccount()">Add Account</button>
+
+<input type="text" id="username" placeholder="Account Username">
+
+<button onclick="addAccount()">Add Monitoring Account</button>
+
 </div>
 
-<div id="socialAccountsContainer"></div>
-</section>
+<div id="accountsList"></div>
 
-<section class="screen" id="profileScreen">
-<div class="topbar"><div class="brand">Profile</div></div>
+</div>
+
+<div id="profile" class="screen">
+
 <div class="card">
-<h2 id="profileName">Protected User</h2>
-<p style="margin-top:10px;color:#94A3B8;">North Elite Member</p>
-</div>
-</section>
+<div class="profile">
+<div class="avatar" id="avatar">N</div>
 
-<div class="bottom-nav">
-<div class="nav-btn active" onclick="showScreen('dashboard', this)">🏠<span>Dashboard</span></div>
-<div class="nav-btn" onclick="showScreen('socialScreen', this)">📡<span>Social</span></div>
-<div class="nav-btn" onclick="showScreen('profileScreen', this)">👤<span>Profile</span></div>
+<div>
+<h2 id="profileName">North User</h2>
+<p style="color:#94a3b8">Elite Protection Plan</p>
 </div>
-
+</div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="card">
+<div class="title">Edit Profile</div>
+
+<input id="editName" placeholder="Full Name">
+<input id="editEmail" placeholder="Email">
+<input id="editCountry" placeholder="Country">
+
+<button onclick="saveProfile()">Save Changes</button>
+</div>
+
+<div class="card">
+<div class="title">Protection Settings</div>
+
+<div class="notice">Advanced AI Monitoring Enabled</div>
+<div class="notice">Encrypted Session Protection Active</div>
+<div class="notice">Credential Shield Enabled</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="bottom">
+<div class="nav active" onclick="show('dashboard',this)">🏠<br>Dashboard</div>
+<div class="nav" onclick="show('accounts',this)">📡<br>Accounts</div>
+<div class="nav" onclick="show('profile',this)">👤<br>Profile</div>
+</div>
+
+</div>
 
 <script>
 
-const loadingTexts=[
-'Initializing Secure Environment',
-'Loading Threat Analysis Engine',
-'Connecting Security Network',
-'Encrypting Monitoring Systems'
-];
-
-let loadingIndex=0;
-
-setInterval(()=>{
-document.getElementById('loadingText').innerText=loadingTexts[loadingIndex];
-loadingIndex++;
-if(loadingIndex>=loadingTexts.length){loadingIndex=0;}
-},1500);
-
-setTimeout(()=>{
-document.getElementById('splash').style.opacity='0';
-setTimeout(()=>{
-document.getElementById('splash').style.display='none';
-document.getElementById('app').style.display='block';
-loadSocialAccounts();
-startTerminal();
-},1000);
-},4000);
-
-function showScreen(id,el){
-document.querySelectorAll('.screen').forEach(screen=>screen.classList.remove('active'));
+function show(id,el){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
-document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));
+
+document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
 el.classList.add('active');
 }
 
-function showNotification(text){
-const toast=document.getElementById('toast');
-toast.innerText=text;
-toast.style.display='block';
-setTimeout(()=>{toast.style.display='none';},3000);
-}
+const feed = document.getElementById('feed');
 
-function loadSocialAccounts(){
-const container=document.getElementById('socialAccountsContainer');
-const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
-container.innerHTML='';
-
-if(accounts.length===0){
-container.innerHTML=`<div class="social-item"><h3>No Accounts Connected</h3></div>`;
-return;
-}
-
-accounts.forEach((acc,index)=>{
-container.innerHTML+=`
-<div class="social-item">
-<h3>${acc.platform}</h3>
-<p>Login: ${acc.login}</p>
-<p class="status-green">Monitoring Active</p>
-<button onclick="removeSocialAccount(${index})" style="margin-top:12px;background:rgba(239,68,68,.12);color:#EF4444;">Remove Account</button>
-</div>`;
-});
-}
-
-function addSocialAccount(){
-const platform=document.getElementById('socialPlatform').value;
-const login=document.getElementById('socialLogin').value;
-const password=document.getElementById('socialPassword').value;
-
-if(login===''||password===''){
-showNotification('Fill all fields');
-return;
-}
-
-const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
-accounts.push({platform,login,password});
-localStorage.setItem('northSocialAccounts',JSON.stringify(accounts));
-
-showNotification(platform+' connected');
-
-loadSocialAccounts();
-
-}
-
-function removeSocialAccount(index){
-const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
-accounts.splice(index,1);
-localStorage.setItem('northSocialAccounts',JSON.stringify(accounts));
-loadSocialAccounts();
-}
-
-const terminalMessages=[
-'AI engine analyzing behavior...',
-'Encrypted tunnel secured.',
-'Credential leak scan completed.',
-'Suspicious IP blocked.',
-'Deep packet inspection active.',
-'Threat neutralized successfully.'
+const logs = [
+'Encrypted tunnel successfully established',
+'Potential phishing domain blocked',
+'Suspicious login attempt denied',
+'Firewall integrity verified',
+'Secure DNS enabled',
+'Credential verification completed',
+'AI monitoring system updated',
+'Unknown IP address analyzed',
+'VPN connection secured'
 ];
 
-function startTerminal(){
-const terminal=document.getElementById('terminal');
 setInterval(()=>{
-const line=document.createElement('div');
-line.className='terminal-line';
-line.innerHTML='> '+terminalMessages[Math.floor(Math.random()*terminalMessages.length)];
-terminal.appendChild(line);
-terminal.scrollTop=terminal.scrollHeight;
-if(terminal.children.length>18){terminal.removeChild(terminal.children[0]);}
-},1800);
+const item = document.createElement('div');
+item.className='feed-item';
+
+const random = logs[Math.floor(Math.random()*logs.length)];
+
+item.innerHTML = "🛡 " + random + " • " + new Date().toLocaleTimeString();
+
+feed.prepend(item);
+
+if(feed.children.length > 10){
+feed.removeChild(feed.lastChild);
 }
 
+document.getElementById('score').innerText =
+95 + Math.floor(Math.random()*5);
+
+document.getElementById('threats').innerText =
+120 + Math.floor(Math.random()*20);
+
+},3000);
+
+function addAccount(){
+
+const platform =
+document.getElementById('platform').value;
+
+const username =
+document.getElementById('username').value;
+
+if(username.trim()===''){
+alert('Enter username');
+return;
+}
+
+const card = document.createElement('div');
+card.className='card';
+
+card.innerHTML = `
+<div class="title">${platform}</div>
+<p>Account: ${username}</p>
+<p style="margin-top:10px;color:#22c55e">
+Monitoring Active
+</p>
+`;
+
+document.getElementById('accountsList').prepend(card);
+
+document.getElementById('username').value='';
+
+}
+
+function saveProfile(){
+
+const name =
+document.getElementById('editName').value;
+
+if(name.trim()!==''){
+document.getElementById('profileName').innerText = name;
+document.getElementById('avatar').innerText =
+name.charAt(0).toUpperCase();
+}
+
+alert('Profile updated successfully');
+
+}
+
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+
+canvas.width = canvas.offsetWidth;
+canvas.height = 200;
+
+let points = [];
+
+for(let i=0;i<25;i++){
+points.push(Math.random()*120+20);
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.beginPath();
+
+for(let i=0;i<points.length;i++){
+
+const x = (i/(points.length-1))*canvas.width;
+const y = canvas.height - points[i];
+
+if(i===0){
+ctx.moveTo(x,y);
+}else{
+ctx.lineTo(x,y);
+}
+
+points[i]+= (Math.random()-.5)*8;
+
+if(points[i]<20) points[i]=20;
+if(points[i]>170) points[i]=170;
+
+}
+
+ctx.strokeStyle='#38bdf8';
+ctx.lineWidth=3;
+ctx.shadowBlur=20;
+ctx.shadowColor='#38bdf8';
+ctx.stroke();
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
 </script>
+
 </body>
 </html>
-```
