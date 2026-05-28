@@ -6,516 +6,236 @@
 <title>North Protection</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
-}
-
-html{
-height:100%;
-overflow:hidden;
+font-family:Arial, sans-serif;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:
-radial-gradient(circle at top left, rgba(37,99,235,.18), transparent 25%),
-radial-gradient(circle at bottom right, rgba(34,211,238,.12), transparent 25%),
-linear-gradient(135deg,#020202,#07111d,#020202);
-color:#fff;
-overflow:hidden;
-height:100dvh;
-width:100%;
+background:#050816;
+color:white;
+overflow-x:hidden;
 }
-
-/* =========================================================
-   ROOT
-========================================================= */
 
 :root{
---blue:#2563EB;
---cyan:#22D3EE;
---green:#22C55E;
---red:#EF4444;
---gray:#94A3B8;
---border:rgba(255,255,255,.08);
---shadow:0 10px 40px rgba(0,0,0,.5);
+--blue:#2563eb;
+--cyan:#22d3ee;
+--green:#22c55e;
+--red:#ef4444;
+--card:#0f172a;
 }
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.cyber-bg{
-position:fixed;
-inset:0;
-overflow:hidden;
-z-index:0;
-}
-
-.grid{
-position:absolute;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-background-size:40px 40px;
-animation:gridMove 15s linear infinite;
-opacity:.25;
-}
-
-@keyframes gridMove{
-from{transform:translateY(0);}
-to{transform:translateY(40px);}
-}
-
-.glow{
-position:absolute;
-border-radius:50%;
-filter:blur(120px);
-opacity:.15;
-}
-
-.glow1{
-width:400px;
-height:400px;
-background:#2563EB;
-top:-100px;
-left:-100px;
-}
-
-.glow2{
-width:350px;
-height:350px;
-background:#22D3EE;
-bottom:-100px;
-right:-100px;
-}
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-position:relative;
-z-index:2;
-width:100%;
-height:100dvh;
-overflow:hidden;
-}
-
-.screen{
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:82px;
-overflow-y:auto;
-overflow-x:hidden;
+header{
 padding:20px;
-display:none;
--webkit-overflow-scrolling:touch;
-}
-
-.screen.active{
-display:block;
-animation:fade .4s ease;
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(15px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
-gap:12px;
+background:rgba(0,0,0,.3);
+backdrop-filter:blur(10px);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-.brand{
-font-size:1.2rem;
-font-weight:700;
-letter-spacing:3px;
-}
-
-.live{
-display:flex;
-align-items:center;
-gap:8px;
-color:var(--green);
-font-size:.9rem;
-}
-
-.dot{
-width:10px;
-height:10px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 15px var(--green);
-animation:blink 1s infinite;
-}
-
-@keyframes blink{
-50%{
-opacity:.4;
-}
-}
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.card{
-background:rgba(11,17,32,.6);
-border:1px solid var(--border);
-border-radius:28px;
-padding:22px;
-margin-bottom:18px;
-backdrop-filter:blur(18px);
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-width:100%;
-}
-
-.card::before{
-content:'';
-position:absolute;
-inset:0;
-background:
-linear-gradient(135deg, rgba(255,255,255,.08), transparent 30%);
-pointer-events:none;
-}
-
-.section-title{
-font-size:1.2rem;
-font-weight:700;
-margin-bottom:18px;
-}
-
-/* =========================================================
-   SCORE
-========================================================= */
-
-.big-score{
-font-size:5rem;
-font-weight:800;
-background:linear-gradient(135deg,var(--cyan),#fff);
+.logo{
+font-size:22px;
+font-weight:bold;
+background:linear-gradient(90deg,var(--cyan),white);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.small{
-font-size:.85rem;
-color:var(--gray);
-}
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.grid-2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.stat{
-padding:18px;
-border-radius:22px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.05);
-}
-
-.stat h3{
-font-size:.9rem;
-color:var(--gray);
-margin-bottom:10px;
-}
-
-.stat p{
-font-size:2rem;
-font-weight:700;
-}
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status-green{
+.live{
 color:var(--green);
+font-size:14px;
 }
 
-.status-red{
-color:var(--red);
+.container{
+padding:20px;
+padding-bottom:120px;
+max-width:900px;
+margin:auto;
 }
 
-/* =========================================================
-   CHART
-========================================================= */
-
-canvas{
-display:block;
-width:100% !important;
-height:220px !important;
-background:rgba(255,255,255,.02);
-border-radius:20px;
-}
-
-/* =========================================================
-   FEED
-========================================================= */
-
-.feed-item{
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,.03);
-margin-bottom:12px;
-border:1px solid rgba(255,255,255,.05);
-animation:fade .5s ease;
-}
-
-.feed-time{
-font-size:.75rem;
-color:var(--gray);
-margin-top:6px;
-}
-
-/* =========================================================
-   SOCIAL ACCOUNTS
-========================================================= */
-
-.social-card{
-padding:18px;
+.card{
+background:rgba(15,23,42,.9);
+border:1px solid rgba(255,255,255,.08);
 border-radius:22px;
-background:rgba(255,255,255,.03);
-margin-bottom:14px;
-border:1px solid rgba(255,255,255,.05);
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
-.social-card h3{
-margin-bottom:10px;
+h2{
+margin-bottom:15px;
 }
 
 input,select{
 width:100%;
-padding:16px;
-margin-bottom:14px;
+padding:14px;
+margin-bottom:12px;
 border:none;
-border-radius:16px;
-background:rgba(255,255,255,.05);
+border-radius:14px;
+background:#111c33;
 color:white;
-outline:none;
 }
 
 button{
 width:100%;
-padding:16px;
+padding:15px;
 border:none;
-border-radius:18px;
+border-radius:16px;
+background:linear-gradient(90deg,var(--blue),var(--cyan));
+color:white;
+font-weight:bold;
 cursor:pointer;
-font-weight:700;
 transition:.3s;
 }
 
-.primary{
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-color:white;
-box-shadow:0 10px 30px rgba(37,99,235,.35);
+button:hover{
+transform:scale(1.02);
 }
 
-.primary:hover{
-transform:translateY(-2px);
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
 }
 
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-avatar{
-width:90px;
-height:90px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:2rem;
-font-weight:700;
+.stat{
+background:#111c33;
+padding:18px;
+border-radius:18px;
 }
 
-/* =========================================================
-   NAV
-========================================================= */
+.big{
+font-size:40px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.account{
+background:#111c33;
+padding:16px;
+border-radius:16px;
+margin-top:12px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.account small{
+color:#94a3b8;
+display:block;
+margin-top:6px;
+}
+
+.alert{
+padding:15px;
+background:rgba(239,68,68,.12);
+border:1px solid rgba(239,68,68,.25);
+border-radius:16px;
+margin-top:12px;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+50%{transform:scale(1.01);}
+}
 
 .bottom-nav{
 position:fixed;
 bottom:0;
 left:0;
 right:0;
-height:82px;
-background:rgba(5,5,5,.92);
-backdrop-filter:blur(18px);
-border-top:1px solid rgba(255,255,255,.05);
+height:80px;
+background:#08111f;
 display:flex;
 justify-content:space-around;
 align-items:center;
-z-index:999;
-padding-bottom:env(safe-area-inset-bottom);
+border-top:1px solid rgba(255,255,255,.06);
 }
 
-.nav-btn{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-font-size:.75rem;
-color:var(--gray);
+.nav-item{
+text-align:center;
+font-size:13px;
+color:#94a3b8;
 cursor:pointer;
-transition:.3s;
 }
 
-.nav-btn.active{
+.nav-item.active{
 color:var(--cyan);
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:420px){
-
-.grid-2{
-grid-template-columns:1fr;
+canvas{
+width:100%;
+height:220px;
+background:#111c33;
+border-radius:20px;
 }
 
-.big-score{
-font-size:4rem;
+.profile{
+display:flex;
+align-items:center;
+gap:18px;
 }
 
-.brand{
-font-size:1rem;
+.avatar{
+width:80px;
+height:80px;
+border-radius:50%;
+background:linear-gradient(135deg,var(--blue),var(--cyan));
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:bold;
 }
 
+.hidden{
+display:none;
 }
-
 </style>
 </head>
-
 <body>
 
-<div class="cyber-bg">
-<div class="grid"></div>
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
+<header>
+<div class="logo">NORTH PROTECTION</div>
+<div class="live">● LIVE MONITORING</div>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Security Overview</h2>
+
+<div class="stats">
+<div class="stat">
+<div>Security Score</div>
+<div class="big" id="score">98</div>
 </div>
 
-<div class="app">
+<div class="stat">
+<div>Threat Level</div>
+<div class="big" style="color:#22c55e;">LOW</div>
+</div>
 
-<!-- DASHBOARD -->
-
-<section class="screen active" id="dashboard">
-
-<div class="topbar">
-<div class="brand">NORTH PROTECTION</div>
-
-<div class="live">
-<div class="dot"></div>
-LIVE MONITORING
+<div class="stat">
+<div>Accounts Protected</div>
+<div class="big" id="accCount">0</div>
+</div>
 </div>
 </div>
 
 <div class="card">
-
-<div class="small">Security Score</div>
-
-<div class="big-score" id="securityScore">
-95
-</div>
-
-</div>
-
-<div class="grid-2">
-
-<div class="stat">
-<h3>Threats Blocked</h3>
-<p id="threatsBlocked">133</p>
-</div>
-
-<div class="stat">
-<h3>Protected Accounts</h3>
-<p id="protectedAccounts">4</p>
-</div>
-
-<div class="stat">
-<h3>VPN Tunnel</h3>
-<p class="status-green">ACTIVE</p>
-</div>
-
-<div class="stat">
-<h3>AI Firewall</h3>
-<p class="status-green">SECURED</p>
-</div>
-
+<h2>Threat Activity</h2>
+<canvas id="chart"></canvas>
 </div>
 
 <div class="card">
+<h2>Add Monitoring Account</h2>
 
-<div class="section-title">
-Threat Activity
-</div>
-
-<canvas id="threatChart"></canvas>
-
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Real-Time Monitoring Feed
-</div>
-
-<div id="feed"></div>
-
-</div>
-
-</section>
-
-<!-- ACCOUNTS -->
-
-<section class="screen" id="accounts">
-
-<div class="topbar">
-<div class="brand">MONITORED ACCOUNTS</div>
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Add Social Account
-</div>
-
-<select id="socialPlatform">
+<select id="network">
 <option>Instagram</option>
 <option>Facebook</option>
 <option>Discord</option>
@@ -524,368 +244,201 @@ Add Social Account
 <option>LinkedIn</option>
 </select>
 
-<input type="text" id="socialLogin" placeholder="Account Login">
+<input type="text" id="login" placeholder="Account Login">
+<input type="password" id="password" placeholder="Account Password">
 
-<input type="password" id="socialPassword" placeholder="Account Password">
+<button onclick="addAccount()">Add Monitoring Account</button>
 
-<button class="primary" onclick="addAccount()">
-Add Monitoring
-</button>
-
-</div>
-
-<div id="accountsList"></div>
-
-</section>
-
-<!-- PROFILE -->
-
-<section class="screen" id="profile">
-
-<div class="topbar">
-<div class="brand">PROFILE</div>
+<div id="accounts"></div>
 </div>
 
 <div class="card">
+<h2>Live Alerts</h2>
 
-<div style="display:flex;align-items:center;gap:18px;">
-
-<div class="profile-avatar" id="avatarLetter">
-N
+<div id="alerts"></div>
 </div>
+
+<div class="card">
+<h2>Edit Profile</h2>
+
+<div class="profile">
+<div class="avatar" id="avatar">N</div>
 
 <div>
-<h2 id="profileName">
-North User
-</h2>
+<h3 id="profileName">North User</h3>
+<p style="color:#94a3b8;">Elite Protection</p>
+</div>
+</div>
 
-<p class="small">
-Elite Protection Enabled
-</p>
+<br>
+
+<input type="text" id="editName" placeholder="Edit Profile Name">
+
+<button onclick="saveProfile()">Save Profile</button>
 </div>
 
 </div>
-
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Edit Profile
-</div>
-
-<input type="text" id="editName" placeholder="Full Name">
-
-<input type="email" id="editEmail" placeholder="Email">
-
-<button class="primary" onclick="saveProfile()">
-Save Changes
-</button>
-
-</div>
-
-</section>
-
-<!-- NAV -->
 
 <div class="bottom-nav">
-
-<div class="nav-btn active" onclick="showScreen('dashboard',this)">
-🏠
-<span>Dashboard</span>
-</div>
-
-<div class="nav-btn" onclick="showScreen('accounts',this)">
-📡
-<span>Accounts</span>
-</div>
-
-<div class="nav-btn" onclick="showScreen('profile',this)">
-👤
-<span>Profile</span>
-</div>
-
-</div>
-
+<div class="nav-item active">Dashboard</div>
+<div class="nav-item">Social</div>
+<div class="nav-item">Networks</div>
+<div class="nav-item">Profile</div>
+<div class="nav-item">Settings</div>
 </div>
 
 <script>
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showScreen(id,el){
-
-document.querySelectorAll('.screen').forEach(screen=>{
-screen.classList.remove('active');
-});
-
-document.getElementById(id).classList.add('active');
-
-document.querySelectorAll('.nav-btn').forEach(btn=>{
-btn.classList.remove('active');
-});
-
-el.classList.add('active');
-
-}
-
-/* =========================================================
-   LIVE SCORE
-========================================================= */
-
-setInterval(()=>{
-
-document.getElementById('securityScore').innerText =
-Math.floor(Math.random()*5)+95;
-
-document.getElementById('threatsBlocked').innerText =
-Math.floor(Math.random()*300)+120;
-
-},3000);
-
-/* =========================================================
-   LIVE FEED
-========================================================= */
-
-const feedMessages = [
-
-'Encrypted tunnel secured',
-'Suspicious login blocked',
-'Credential verification completed',
-'Threat signature neutralized',
-'Dark web scan completed',
-'Firewall integrity stable',
-'AI analysis detected suspicious behavior',
-'Network anomaly prevented'
-
+const alerts = [
+"Suspicious login attempt blocked",
+"VPN tunnel encrypted successfully",
+"Threat analysis completed",
+"Credential integrity verified",
+"Unknown IP detected and isolated",
+"Real-time scan completed"
 ];
 
-function addFeed(){
+function createAlert(){
+const div = document.createElement("div");
+div.className = "alert";
+div.innerText = alerts[Math.floor(Math.random()*alerts.length)];
 
-const feed = document.getElementById('feed');
+const container = document.getElementById("alerts");
+container.prepend(div);
 
-const div = document.createElement('div');
-
-div.className='feed-item';
-
-const message =
-feedMessages[Math.floor(Math.random()*feedMessages.length)];
-
-div.innerHTML = `
-<div>${message}</div>
-<div class="feed-time">${new Date().toLocaleTimeString()}</div>
-`;
-
-feed.prepend(div);
-
-if(feed.children.length > 8){
-feed.removeChild(feed.lastChild);
+if(container.children.length > 5){
+container.removeChild(container.lastChild);
+}
 }
 
-}
-
-setInterval(addFeed,2500);
-
-addFeed();
-
-/* =========================================================
-   ACCOUNTS
-========================================================= */
+setInterval(createAlert,4000);
 
 function addAccount(){
+const network = document.getElementById("network").value;
+const login = document.getElementById("login").value;
+const password = document.getElementById("password").value;
 
-const platform =
-document.getElementById('socialPlatform').value;
-
-const login =
-document.getElementById('socialLogin').value;
-
-const password =
-document.getElementById('socialPassword').value;
-
-if(login === '' || password === ''){
-alert('Please fill all fields');
+if(!login || !password){
+alert("Fill all fields");
 return;
 }
 
-const list =
-document.getElementById('accountsList');
+const account = {
+network,
+login,
+password
+};
 
-const div =
-document.createElement('div');
+let accounts = JSON.parse(localStorage.getItem("northAccounts") || "[]");
+accounts.push(account);
 
-div.className='social-card';
+localStorage.setItem("northAccounts", JSON.stringify(accounts));
 
-div.innerHTML = `
-<h3>${platform}</h3>
-<p>Login: ${login}</p>
-<p class="status-green">Monitoring Active</p>
-`;
+renderAccounts();
 
-list.prepend(div);
-
-document.getElementById('socialLogin').value='';
-document.getElementById('socialPassword').value='';
-
-const total =
-document.querySelectorAll('.social-card').length;
-
-document.getElementById('protectedAccounts').innerText =
-total;
-
+document.getElementById("login").value="";
+document.getElementById("password").value="";
 }
 
-/* =========================================================
-   PROFILE
-========================================================= */
+function renderAccounts(){
+const container = document.getElementById("accounts");
+container.innerHTML = "";
+
+let accounts = JSON.parse(localStorage.getItem("northAccounts") || "[]");
+
+document.getElementById("accCount").innerText = accounts.length;
+
+accounts.forEach((acc,index)=>{
+container.innerHTML += `
+<div class="account">
+<h3>${acc.network}</h3>
+<small>Login: ${acc.login}</small>
+<small>Password: ••••••••••</small>
+<br>
+<button onclick="removeAccount(${index})">Remove</button>
+</div>
+`;
+});
+}
+
+function removeAccount(index){
+let accounts = JSON.parse(localStorage.getItem("northAccounts") || "[]");
+accounts.splice(index,1);
+localStorage.setItem("northAccounts", JSON.stringify(accounts));
+renderAccounts();
+}
 
 function saveProfile(){
+const name = document.getElementById("editName").value;
 
-const name =
-document.getElementById('editName').value;
+if(!name) return;
 
-const email =
-document.getElementById('editEmail').value;
+localStorage.setItem("northProfile", name);
 
-if(name !== ''){
-
-document.getElementById('profileName').innerText = name;
-
-document.getElementById('avatarLetter').innerText =
-name.charAt(0).toUpperCase();
-
+document.getElementById("profileName").innerText = name;
+document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
 }
 
-localStorage.setItem('north_name',name);
-localStorage.setItem('north_email',email);
+function loadProfile(){
+const name = localStorage.getItem("northProfile");
 
-alert('Profile Updated');
-
+if(name){
+document.getElementById("profileName").innerText = name;
+document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
+}
 }
 
-window.onload = ()=>{
+setInterval(()=>{
+document.getElementById("score").innerText =
+95 + Math.floor(Math.random()*5);
+},3000);
 
-const savedName =
-localStorage.getItem('north_name');
+function drawChart(){
+const canvas = document.getElementById("chart");
+const ctx = canvas.getContext("2d");
 
-const savedEmail =
-localStorage.getItem('north_email');
-
-if(savedName){
-
-document.getElementById('profileName').innerText =
-savedName;
-
-document.getElementById('avatarLetter').innerText =
-savedName.charAt(0).toUpperCase();
-
-document.getElementById('editName').value =
-savedName;
-
-}
-
-if(savedEmail){
-
-document.getElementById('editEmail').value =
-savedEmail;
-
-}
-
-createChart();
-
-}
-
-/* =========================================================
-   CHART
-========================================================= */
-
-function createChart(){
-
-const canvas =
-document.getElementById('threatChart');
-
-const ctx =
-canvas.getContext('2d');
-
-canvas.width =
-canvas.parentElement.offsetWidth - 20;
-
+canvas.width = canvas.offsetWidth;
 canvas.height = 220;
 
 let points = [];
 
 for(let i=0;i<25;i++){
-
-points.push(
-Math.random()*160+20
-);
-
+points.push(Math.random()*150+20);
 }
 
-function draw(){
-
+function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.beginPath();
+ctx.moveTo(0,canvas.height);
 
-for(let i=0;i<points.length;i++){
+points.forEach((p,i)=>{
+const x = (i/(points.length-1))*canvas.width;
+const y = canvas.height-p;
 
-const x =
-(i/(points.length-1))*canvas.width;
-
-const y =
-canvas.height - points[i];
-
-if(i===0){
-ctx.moveTo(x,y);
-}else{
 ctx.lineTo(x,y);
-}
 
-}
-
-ctx.strokeStyle='#22D3EE';
-ctx.lineWidth=4;
-ctx.shadowBlur=20;
-ctx.shadowColor='#22D3EE';
-
-ctx.stroke();
-
-for(let i=0;i<points.length;i++){
-
-points[i]+= (Math.random()-.5)*15;
+points[i]+=Math.random()*8-4;
 
 if(points[i]<20) points[i]=20;
 if(points[i]>180) points[i]=180;
-
-}
-
-requestAnimationFrame(draw);
-
-}
-
-draw();
-
-}
-
-window.addEventListener('resize',()=>{
-
-const canvas =
-document.getElementById('threatChart');
-
-if(canvas){
-
-canvas.width =
-canvas.parentElement.offsetWidth - 20;
-
-canvas.height = 220;
-
-}
-
 });
 
+ctx.strokeStyle="#22d3ee";
+ctx.lineWidth=3;
+ctx.shadowBlur=20;
+ctx.shadowColor="#22d3ee";
+ctx.stroke();
+
+requestAnimationFrame(animate);
+}
+
+animate();
+}
+
+drawChart();
+renderAccounts();
+loadProfile();
+createAlert();
 </script>
 
 </body>
