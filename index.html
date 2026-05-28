@@ -1,1368 +1,1072 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>North Protection</title>
-
-<style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color: transparent;
-}
-
-:root{
---bg:#050505;
---navy:#0B1120;
---blue:#2563EB;
---cyan:#22D3EE;
---green:#22C55E;
---red:#EF4444;
---white:#F8FAFC;
---gray:#94A3B8;
---glass:rgba(255,255,255,0.05);
---border:rgba(255,255,255,0.08);
---shadow:0 10px 40px rgba(0,0,0,.5);
-}
-
-body{
-font-family:Arial, Helvetica, sans-serif;
-background:
-radial-gradient(circle at top left, rgba(37,99,235,.18), transparent 25%),
-radial-gradient(circle at bottom right, rgba(34,211,238,.12), transparent 25%),
-linear-gradient(135deg,#020202,#07111d,#020202);
-color:var(--white);
-overflow:hidden;
-height:100vh;
-}
-
-/* =========================================================
-   CYBER BACKGROUND
-========================================================= */
-
-.cyber-bg{
-position:fixed;
-inset:0;
-overflow:hidden;
-z-index:0;
-}
-
-.grid{
-position:absolute;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-background-size:40px 40px;
-opacity:.3;
-animation:gridMove 15s linear infinite;
-}
-
-@keyframes gridMove{
-from{
-transform:translateY(0);
-}
-to{
-transform:translateY(40px);
-}
-}
-
-.glow{
-position:absolute;
-border-radius:50%;
-filter:blur(120px);
-opacity:.18;
-}
-
-.glow1{
-width:400px;
-height:400px;
-background:#2563EB;
-top:-100px;
-left:-100px;
-}
-
-.glow2{
-width:350px;
-height:350px;
-background:#22D3EE;
-bottom:-100px;
-right:-100px;
-}
-
-/* =========================================================
-   SPLASH
-========================================================= */
-
-#splash{
-position:fixed;
-inset:0;
-z-index:1000;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:
-linear-gradient(135deg,#010101,#08111e,#010101);
-transition:1s;
-}
-
-.shield{
-width:120px;
-height:120px;
-border-radius:30px;
-border:2px solid rgba(34,211,238,.5);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:54px;
-color:var(--cyan);
-box-shadow:
-0 0 40px rgba(34,211,238,.4),
-inset 0 0 20px rgba(34,211,238,.2);
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%,100%{
-transform:scale(1);
-}
-50%{
-transform:scale(1.08);
-}
-}
-
-.logo{
-margin-top:28px;
-font-size:2rem;
-font-weight:700;
-letter-spacing:3px;
-}
-
-.loading{
-margin-top:18px;
-font-size:.9rem;
-color:var(--gray);
-}
-
-.loader{
-margin-top:22px;
-width:220px;
-height:6px;
-background:rgba(255,255,255,.05);
-border-radius:999px;
-overflow:hidden;
-}
-
-.loader span{
-display:block;
-height:100%;
-width:40%;
-background:linear-gradient(90deg,var(--blue),var(--cyan));
-animation:load 2s infinite;
-border-radius:999px;
-}
-
-@keyframes load{
-0%{
-transform:translateX(-100%);
-}
-100%{
-transform:translateX(400%);
-}
-}
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-position:relative;
-z-index:2;
-width:100%;
-height:100vh;
-overflow:hidden;
-display:none;
-}
-
-.screen{
-position:absolute;
-inset:0;
-overflow-y:auto;
-padding:20px;
-padding-bottom:100px;
-display:none;
-}
-
-.screen.active{
-display:block;
-animation:fade .6s ease;
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(15px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* =========================================================
-   GLASS CARD
-========================================================= */
-
-.card{
-background:rgba(11,17,32,.55);
-border:1px solid var(--border);
-backdrop-filter:blur(18px);
-border-radius:24px;
-padding:20px;
-margin-bottom:18px;
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-}
-
-.card::before{
-content:"";
-position:absolute;
-inset:0;
-background:
-linear-gradient(135deg, rgba(255,255,255,.08), transparent 30%);
-pointer-events:none;
-}
-
-.section-title{
-font-size:1.2rem;
-margin-bottom:18px;
-font-weight:700;
-}
-
-/* =========================================================
-   FORM
-========================================================= */
-
-input,select{
-width:100%;
-padding:16px;
-margin-bottom:14px;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.04);
-color:white;
-font-size:1rem;
-outline:none;
-}
-
-button{
-border:none;
-cursor:pointer;
-padding:16px;
-border-radius:18px;
-font-size:1rem;
-font-weight:600;
-transition:.3s;
-width:100%;
-}
-
-.primary{
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-color:white;
-box-shadow:0 10px 30px rgba(37,99,235,.35);
-}
-
-.primary:hover{
-transform:translateY(-2px);
-}
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-}
-
-.brand{
-font-size:1.2rem;
-font-weight:700;
-letter-spacing:1px;
-}
-
-.live{
-display:flex;
-align-items:center;
-gap:8px;
-font-size:.85rem;
-color:var(--green);
-}
-
-.dot{
-width:10px;
-height:10px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 12px var(--green);
-animation:blink 1s infinite;
-}
-
-@keyframes blink{
-50%{
-opacity:.4;
-}
-}
-
-/* =========================================================
-   SCORE
-========================================================= */
-
-.score{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.big-score{
-font-size:4rem;
-font-weight:800;
-background:linear-gradient(135deg,var(--cyan),white);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.small{
-font-size:.85rem;
-color:var(--gray);
-}
-
-/* =========================================================
-   STATS GRID
-========================================================= */
-
-.grid-2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.stat{
-padding:18px;
-border-radius:20px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.05);
-}
-
-.stat h3{
-font-size:.85rem;
-color:var(--gray);
-margin-bottom:10px;
-}
-
-.stat p{
-font-size:1.4rem;
-font-weight:700;
-}
-
-/* =========================================================
-   PLAN CARDS
-========================================================= */
-
-.plan{
-border:1px solid rgba(255,255,255,.08);
-padding:22px;
-border-radius:24px;
-margin-bottom:18px;
-position:relative;
-overflow:hidden;
-background:rgba(255,255,255,.03);
-}
-
-.plan h2{
-margin-bottom:8px;
-}
-
-.price{
-font-size:2rem;
-font-weight:700;
-margin-bottom:16px;
-}
-
-.plan ul{
-padding-left:18px;
-color:var(--gray);
-line-height:1.8;
-margin-bottom:20px;
-}
-
-.badge{
-position:absolute;
-top:16px;
-right:16px;
-background:var(--green);
-padding:6px 12px;
-border-radius:999px;
-font-size:.75rem;
-font-weight:700;
-}
-
-/* =========================================================
-   CHART
-========================================================= */
-
-canvas{
-width:100%;
-height:220px;
-background:rgba(255,255,255,.03);
-border-radius:20px;
-}
-
-/* =========================================================
-   ALERTS
-========================================================= */
-
-.alert{
-padding:16px;
-border-radius:18px;
-margin-bottom:14px;
-display:flex;
-gap:12px;
-align-items:flex-start;
-background:rgba(239,68,68,.08);
-border:1px solid rgba(239,68,68,.15);
-}
-
-.alert-icon{
-font-size:1.3rem;
-}
-
-/* =========================================================
-   NETWORK
-========================================================= */
-
-.device{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px;
-border-radius:18px;
-margin-bottom:12px;
-background:rgba(255,255,255,.04);
-}
-
-.status-green{
-color:var(--green);
-}
-
-.status-red{
-color:var(--red);
-}
-
-/* =========================================================
-   SOCIAL
-========================================================= */
-
-.social-item{
-padding:18px;
-border-radius:20px;
-margin-bottom:14px;
-background:rgba(255,255,255,.03);
-}
-
-.social-item h3{
-margin-bottom:8px;
-}
-
-/* =========================================================
-   BOTTOM NAV
-========================================================= */
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:78px;
-background:rgba(5,5,5,.88);
-backdrop-filter:blur(18px);
-border-top:1px solid rgba(255,255,255,.05);
-display:flex;
-justify-content:space-around;
-align-items:center;
-z-index:50;
-}
-
-.nav-btn{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-font-size:.72rem;
-color:var(--gray);
-cursor:pointer;
-transition:.3s;
-}
-
-.nav-btn.active{
-color:var(--cyan);
-}
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-.toast{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(11,17,32,.95);
-padding:16px 20px;
-border-radius:18px;
-border:1px solid rgba(34,211,238,.2);
-box-shadow:var(--shadow);
-z-index:999;
-display:none;
-}
-
-/* =========================================================
-   SCAN
-========================================================= */
-
-.scan-line{
-position:absolute;
-left:0;
-right:0;
-height:4px;
-background:linear-gradient(90deg, transparent, var(--cyan), transparent);
-box-shadow:0 0 20px var(--cyan);
-animation:scan 4s linear infinite;
-}
-
-@keyframes scan{
-0%{
-top:-10%;
-}
-100%{
-top:110%;
-}
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- =========================================================
-     CYBER BACKGROUND
-========================================================= -->
-
-<div class="cyber-bg">
-<div class="grid"></div>
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
-</div>
-
-<!-- =========================================================
-     SPLASH SCREEN
-========================================================= -->
-
-<div id="splash">
-
-<div class="shield">🛡</div>
-
-<div class="logo">
-NORTH PROTECTION
-</div>
-
-<div class="loading" id="loadingText">
-Initializing Secure Environment
-</div>
-
-<div class="loader">
-<span></span>
-</div>
-
-</div>
-
-<!-- =========================================================
-     APP
-========================================================= -->
-
-<div class="app" id="app">
-
-<!-- =========================================================
-     ONBOARDING
-========================================================= -->
-
-<section class="screen active" id="onboarding">
-
-<div class="topbar">
-<div class="brand">North Protection</div>
-<div class="live">
-<div class="dot"></div>
-SECURE
-</div>
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Activate Protection
-</div>
-
-<input type="text" id="fullName" placeholder="Full Name">
-<input type="email" id="email" placeholder="Email Address">
-<input type="password" id="password" placeholder="Password">
-<input type="text" id="phone" placeholder="Phone Number">
-<input type="text" id="country" placeholder="Country">
-<input type="text" id="device" placeholder="Device Name">
-
-<select id="social">
-<option>Main Social Media</option>
-<option>Instagram</option>
-<option>Facebook</option>
-<option>TikTok</option>
-<option>Discord</option>
-<option>Telegram</option>
-</select>
-
-<select id="level">
-<option>Security Level Preference</option>
-<option>Basic</option>
-<option>Advanced</option>
-<option>Elite</option>
-</select>
-
-<button class="primary" onclick="saveUserData()">
-Activate Protection
-</button>
-
-</div>
-
-</section>
-
-<!-- =========================================================
-     PLANS
-========================================================= -->
-
-<section class="screen" id="plans">
-
-<div class="topbar">
-<div class="brand">Protection Plans</div>
-</div>
-
-<div class="plan">
-<h2>North Basic</h2>
-<div class="price">$100/month</div>
-
-<ul>
-<li>Social monitoring</li>
-<li>Email monitoring</li>
-<li>Basic device analysis</li>
-<li>Access alerts</li>
-<li>Real-time notifications</li>
-</ul>
-
-<button class="primary" onclick="selectPlan('Basic')">
-Choose Plan
-</button>
-</div>
-
-<div class="plan">
-<h2>North Advanced</h2>
-<div class="price">$250/month</div>
-
-<ul>
-<li>Deep network monitoring</li>
-<li>Connected devices analysis</li>
-<li>Threat intelligence</li>
-<li>Social media tracking</li>
-<li>Advanced alerts</li>
-<li>Cloud protection</li>
-</ul>
-
-<button class="primary" onclick="selectPlan('Advanced')">
-Choose Plan
-</button>
-</div>
-
-<div class="plan">
-<div class="badge">
-MOST SECURE
-</div>
-
-<h2>North Elite</h2>
-<div class="price">$500/month</div>
-
-<ul>
-<li>Full cyber protection</li>
-<li>AI threat detection</li>
-<li>Real-time surveillance</li>
-<li>Deep credential analysis</li>
-<li>Dark web scan</li>
-<li>Enterprise-grade monitoring</li>
-</ul>
-
-<button class="primary" onclick="selectPlan('Elite')">
-Activate Elite
-</button>
-</div>
-
-</section>
-
-<!-- =========================================================
-     DASHBOARD
-========================================================= -->
-
-<section class="screen" id="dashboard">
-
-<div class="topbar">
-<div>
-<div class="brand">North Protection</div>
-<div class="small">Cyber Intelligence Center</div>
-</div>
-
-<div class="live">
-<div class="dot"></div>
-LIVE MONITORING
-</div>
-</div>
-
-<div class="card">
-
-<div class="scan-line"></div>
-
-<div class="score">
-
-<div>
-<div class="small">Security Score</div>
-<div class="big-score" id="securityScore">
-98
-</div>
-</div>
-
-<div>
-<div class="small">Threat Level</div>
-<h2 class="status-green">
-LOW
-</h2>
-</div>
-
-</div>
-
-</div>
-
-<div class="grid-2">
-
-<div class="stat">
-<h3>Active Protections</h3>
-<p>24</p>
-</div>
-
-<div class="stat">
-<h3>Connected Accounts</h3>
-<p>9</p>
-</div>
-
-<div class="stat">
-<h3>Firewall Status</h3>
-<p class="status-green">ACTIVE</p>
-</div>
-
-<div class="stat">
-<h3>VPN</h3>
-<p class="status-green">SECURED</p>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Threat Activity
-</div>
-
-<canvas id="threatChart"></canvas>
-
-</div>
-
-<div class="card">
-
-<div class="section-title">
-Security Alerts
-</div>
-
-<div id="alertsContainer"></div>
-
-</div>
-
-</section>
-
-<!-- =========================================================
-     SOCIAL
-========================================================= -->
+<!--
+=========================================================
+NORTH PROTECTION — MULTI ACCOUNT UPDATE
+VERSION: 2.0 ENTERPRISE CYBER MONITORING
+=========================================================
+
+IMPORTANT:
+This code is an UPDATE BLOCK for the original project.
+
+REPLACE the old Social Monitoring section + JavaScript
+with this new advanced multi-account system.
+
+=========================================================
+-->
+
+<!-- =====================================================
+     SOCIAL MONITORING SCREEN
+===================================================== -->
 
 <section class="screen" id="socialScreen">
 
 <div class="topbar">
-<div class="brand">Social Monitoring</div>
+<div>
+<div class="brand">Monitoring Center</div>
+<div class="small">
+Enterprise Multi-Account Intelligence
+</div>
 </div>
 
-<div class="social-item">
-<h3>Instagram</h3>
-<p>Status: Connected</p>
-<p class="status-green">Monitoring Active</p>
+<div class="live">
+<div class="dot"></div>
+LIVE
+</div>
 </div>
 
-<div class="social-item">
-<h3>Discord</h3>
-<p>Status: Connected</p>
-<p class="status-green">Secure Sessions Enabled</p>
-</div>
-
-<div class="social-item">
-<h3>Telegram</h3>
-<p>Status: Connected</p>
-<p class="status-red">Suspicious Login Attempt</p>
-</div>
-
-<div class="social-item">
-<h3>LinkedIn</h3>
-<p>Status: Connected</p>
-<p class="status-green">Credential Integrity Verified</p>
-</div>
-
-</section>
-
-<!-- =========================================================
-     NETWORKS
-========================================================= -->
-
-<section class="screen" id="networkScreen">
-
-<div class="topbar">
-<div class="brand">Connected Networks</div>
-</div>
+<!-- =====================================================
+     FILTERS
+===================================================== -->
 
 <div class="card">
 
 <div class="section-title">
-Network Health Score
+Monitoring Filters
 </div>
 
-<div class="big-score">
-96
-</div>
+<div style="display:flex;gap:10px;overflow:auto;padding-bottom:6px;">
+
+<button class="filter-btn active-filter"
+onclick="filterAccounts('all')">
+All
+</button>
+
+<button class="filter-btn"
+onclick="filterAccounts('Instagram')">
+Instagram
+</button>
+
+<button class="filter-btn"
+onclick="filterAccounts('Discord')">
+Discord
+</button>
+
+<button class="filter-btn"
+onclick="filterAccounts('Telegram')">
+Telegram
+</button>
+
+<button class="filter-btn"
+onclick="filterAccounts('Facebook')">
+Facebook
+</button>
+
+<button class="filter-btn"
+onclick="filterAccounts('Email')">
+Emails
+</button>
 
 </div>
 
-<div class="device">
-<div>
-<h3>Home Router</h3>
-<p>Encrypted Connection</p>
+<input
+type="text"
+placeholder="Search monitored accounts..."
+id="searchInput"
+onkeyup="searchAccounts()"
+style="margin-top:15px;"
+>
+
 </div>
 
-<div class="status-green">
-SECURE
-</div>
+<!-- =====================================================
+     ADD ACCOUNT BUTTON
+===================================================== -->
+
+<div class="card">
+
+<button class="primary cyber-btn"
+onclick="openAccountModal()">
+
++ Add Monitored Account
+
+</button>
+
 </div>
 
-<div class="device">
-<div>
-<h3>Smart TV</h3>
-<p>Bandwidth Monitoring Active</p>
-</div>
+<!-- =====================================================
+     ACCOUNT LIST
+===================================================== -->
 
-<div class="status-green">
-PROTECTED
-</div>
-</div>
+<div id="accountsContainer">
 
-<div class="device">
-<div>
-<h3>Unknown Device</h3>
-<p>Potential Unauthorized Access</p>
-</div>
-
-<div class="status-red">
-RISK
-</div>
 </div>
 
 </section>
 
-<!-- =========================================================
-     PROFILE
-========================================================= -->
+<!-- =====================================================
+     ACCOUNT MODAL
+===================================================== -->
 
-<section class="screen" id="profileScreen">
+<div id="accountModal" class="modal">
 
-<div class="topbar">
-<div class="brand">Profile</div>
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>Secure Account Connection</h2>
+
+<div class="close-modal"
+onclick="closeAccountModal()">
+✕
 </div>
 
-<div class="card">
-
-<div style="display:flex;align-items:center;gap:18px;">
-
-<div style="
-width:80px;
-height:80px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:2rem;
-font-weight:700;
-">
-N
 </div>
 
-<div>
-<h2 id="profileName">
-Protected User
+<div class="modal-body">
+
+<select id="accountPlatform">
+
+<option>Instagram</option>
+<option>Facebook</option>
+<option>TikTok</option>
+<option>X/Twitter</option>
+<option>Discord</option>
+<option>Telegram</option>
+<option>WhatsApp</option>
+<option>LinkedIn</option>
+<option>Snapchat</option>
+<option>Email</option>
+
+</select>
+
+<input type="text"
+id="accountUsername"
+placeholder="Username">
+
+<input type="text"
+id="accountEmail"
+placeholder="Email / Login">
+
+<input type="password"
+id="accountPassword"
+placeholder="Password">
+
+<select id="monitorLevel">
+
+<option>Basic Monitoring</option>
+<option>Advanced Monitoring</option>
+<option>Deep Intelligence Monitoring</option>
+
+</select>
+
+<select id="securityPriority">
+
+<option>Low Priority</option>
+<option>Medium Priority</option>
+<option>High Priority</option>
+<option>Critical Priority</option>
+
+</select>
+
+<input type="text"
+id="deviceAlias"
+placeholder="Device Alias">
+
+<textarea
+id="accountNotes"
+placeholder="Notes"
+style="
+width:100%;
+height:100px;
+padding:16px;
+border-radius:18px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+resize:none;
+margin-bottom:15px;
+"></textarea>
+
+<button class="primary"
+onclick="connectAccount()">
+
+Connect Account
+
+</button>
+
+<button class="secondary-btn"
+onclick="closeAccountModal()">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =====================================================
+     ACCOUNT DETAILS PANEL
+===================================================== -->
+
+<div id="detailsPanel" class="details-panel">
+
+<div class="details-content">
+
+<div class="modal-header">
+
+<h2 id="detailsTitle">
+Monitoring Dashboard
 </h2>
 
-<p class="small">
-North Elite Member
-</p>
+<div class="close-modal"
+onclick="closeDetails()">
+✕
+</div>
+
+</div>
+
+<div id="detailsBody">
+
 </div>
 
 </div>
 
 </div>
 
-<div class="card">
+<style>
 
-<div class="section-title">
-Protection Status
-</div>
+/* =====================================================
+   FILTERS
+===================================================== */
 
-<div class="device">
-<div>Biometric Access</div>
-<div class="status-green">ACTIVE</div>
-</div>
+.filter-btn{
+min-width:100px;
+padding:12px 16px;
+border-radius:999px;
+border:none;
+background:rgba(255,255,255,.05);
+color:white;
+font-size:.85rem;
+}
 
-<div class="device">
-<div>Cloud Protection</div>
-<div class="status-green">ENABLED</div>
-</div>
+.active-filter{
+background:linear-gradient(135deg,#2563EB,#22D3EE);
+}
 
-<div class="device">
-<div>Dark Web Scan</div>
-<div class="status-green">MONITORING</div>
-</div>
+/* =====================================================
+   MODAL
+===================================================== */
 
-<div class="device">
-<div>Secure Backup</div>
-<div class="status-green">SYNCED</div>
-</div>
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+backdrop-filter:blur(12px);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+padding:20px;
+}
 
-</div>
+.modal-content{
+width:100%;
+max-width:520px;
+background:
+linear-gradient(135deg,
+rgba(11,17,32,.95),
+rgba(5,5,5,.95));
+border:1px solid rgba(255,255,255,.08);
+border-radius:30px;
+overflow:hidden;
+box-shadow:
+0 0 50px rgba(34,211,238,.18);
+animation:modalIn .4s ease;
+}
 
-</section>
+@keyframes modalIn{
+from{
+transform:translateY(40px) scale(.9);
+opacity:0;
+}
+to{
+transform:translateY(0) scale(1);
+opacity:1;
+}
+}
 
-<!-- =========================================================
-     SETTINGS
-========================================================= -->
+.modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:24px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
 
-<section class="screen" id="settingsScreen">
+.modal-body{
+padding:24px;
+}
 
-<div class="topbar">
-<div class="brand">Settings</div>
-</div>
+.close-modal{
+font-size:1.4rem;
+cursor:pointer;
+color:#94A3B8;
+}
 
-<div class="card">
+.secondary-btn{
+margin-top:12px;
+background:rgba(255,255,255,.06);
+color:white;
+}
 
-<div class="device">
-<div>Enable Notifications</div>
-<div class="status-green">ON</div>
-</div>
+/* =====================================================
+   ACCOUNT CARD
+===================================================== */
 
-<div class="device">
-<div>Auto Security Scan</div>
-<div class="status-green">ENABLED</div>
-</div>
+.account-card{
+position:relative;
+padding:22px;
+border-radius:28px;
+margin-bottom:18px;
+background:
+linear-gradient(135deg,
+rgba(11,17,32,.82),
+rgba(5,5,5,.88));
 
-<div class="device">
-<div>VPN Protection</div>
-<div class="status-green">ACTIVE</div>
-</div>
+border:1px solid rgba(34,211,238,.12);
 
-<div class="device">
-<div>Monitoring Sensitivity</div>
-<div>HIGH</div>
-</div>
+overflow:hidden;
 
-<div class="device">
-<div>Session Management</div>
-<div>5 ACTIVE</div>
-</div>
+box-shadow:
+0 0 25px rgba(34,211,238,.08);
+}
 
-</div>
+.account-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(135deg,
+rgba(255,255,255,.08),
+transparent 35%);
+pointer-events:none;
+}
 
-</section>
+.account-glow{
+position:absolute;
+width:160px;
+height:160px;
+background:rgba(34,211,238,.12);
+filter:blur(70px);
+right:-50px;
+top:-50px;
+}
 
-<!-- =========================================================
-     BOTTOM NAV
-========================================================= -->
+.account-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
 
-<div class="bottom-nav">
+.platform{
+font-size:1.1rem;
+font-weight:700;
+}
 
-<div class="nav-btn active" onclick="showScreen('dashboard', this)">
-🏠
-<span>Dashboard</span>
-</div>
+.live-indicator{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:.8rem;
+color:#22C55E;
+}
 
-<div class="nav-btn" onclick="showScreen('socialScreen', this)">
-📡
-<span>Social</span>
-</div>
+.live-dot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:#22C55E;
+box-shadow:0 0 14px #22C55E;
+animation:blink 1s infinite;
+}
 
-<div class="nav-btn" onclick="showScreen('networkScreen', this)">
-🌐
-<span>Networks</span>
-</div>
+.account-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
+}
 
-<div class="nav-btn" onclick="showScreen('profileScreen', this)">
-👤
-<span>Profile</span>
-</div>
+.account-stat{
+padding:14px;
+border-radius:18px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.05);
+}
 
-<div class="nav-btn" onclick="showScreen('settingsScreen', this)">
-⚙
-<span>Settings</span>
-</div>
+.account-stat span{
+display:block;
+font-size:.78rem;
+color:#94A3B8;
+margin-bottom:8px;
+}
 
-</div>
+.account-stat strong{
+font-size:1rem;
+}
 
-</div>
+.account-actions{
+display:flex;
+gap:10px;
+margin-top:20px;
+flex-wrap:wrap;
+}
 
-<!-- =========================================================
-     TOAST
-========================================================= -->
+.account-actions button{
+flex:1;
+min-width:120px;
+font-size:.85rem;
+padding:12px;
+border-radius:16px;
+}
 
-<div class="toast" id="toast"></div>
+/* =====================================================
+   DETAILS PANEL
+===================================================== */
+
+.details-panel{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(18px);
+display:none;
+z-index:1000;
+overflow:auto;
+padding:20px;
+}
+
+.details-content{
+max-width:900px;
+margin:auto;
+background:
+linear-gradient(135deg,
+rgba(11,17,32,.96),
+rgba(5,5,5,.96));
+border-radius:32px;
+border:1px solid rgba(255,255,255,.08);
+overflow:hidden;
+}
+
+.details-section{
+padding:24px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.details-section h3{
+margin-bottom:18px;
+font-size:1.1rem;
+}
+
+.timeline{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.timeline-item{
+padding:16px;
+border-radius:18px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.cyber-btn{
+height:70px;
+font-size:1.1rem;
+border-radius:24px;
+background:
+linear-gradient(135deg,
+#2563EB,
+#22D3EE);
+box-shadow:
+0 0 30px rgba(34,211,238,.25);
+}
+
+</style>
 
 <script>
 
-/* =========================================================
-   SPLASH
-========================================================= */
+/* =====================================================
+   MULTI ACCOUNT STORAGE
+===================================================== */
 
-const loadingTexts = [
-'Initializing Secure Environment',
-'Loading Threat Analysis Engine',
-'Connecting Security Network',
-'Encrypting Monitoring Systems',
-'Activating AI Protection Layer'
-];
+let monitoredAccounts =
+JSON.parse(
+localStorage.getItem('north_accounts')
+) || [];
 
-let loadingIndex = 0;
+/* =====================================================
+   OPEN/CLOSE MODAL
+===================================================== */
 
-setInterval(()=>{
+function openAccountModal(){
 
-document.getElementById('loadingText').innerText =
-loadingTexts[loadingIndex];
-
-loadingIndex++;
-
-if(loadingIndex >= loadingTexts.length){
-loadingIndex = 0;
-}
-
-},1500);
-
-setTimeout(()=>{
-
-document.getElementById('splash').style.opacity='0';
-
-setTimeout(()=>{
-document.getElementById('splash').style.display='none';
-document.getElementById('app').style.display='block';
-initSystem();
-},1000);
-
-},5000);
-
-/* =========================================================
-   INIT SYSTEM
-========================================================= */
-
-function initSystem(){
-
-loadUser();
-
-renderAlerts();
-
-createCyberChart();
-
-startMonitoring();
+document.getElementById('accountModal')
+.style.display='flex';
 
 }
 
-/* =========================================================
-   SAVE USER
-========================================================= */
+function closeAccountModal(){
 
-function saveUserData(){
+document.getElementById('accountModal')
+.style.display='none';
 
-const user = {
+}
 
-name:document.getElementById('fullName').value,
-email:document.getElementById('email').value,
-plan:'Elite'
+/* =====================================================
+   CONNECT ACCOUNT
+===================================================== */
+
+function connectAccount(){
+
+const platform =
+document.getElementById('accountPlatform').value;
+
+const username =
+document.getElementById('accountUsername').value;
+
+const email =
+document.getElementById('accountEmail').value;
+
+const level =
+document.getElementById('monitorLevel').value;
+
+const priority =
+document.getElementById('securityPriority').value;
+
+const alias =
+document.getElementById('deviceAlias').value;
+
+const notes =
+document.getElementById('accountNotes').value;
+
+/* =====================================================
+   CYBER CONNECTION ANIMATION
+===================================================== */
+
+showNotification(
+'Securing encrypted session...'
+);
+
+setTimeout(()=>{
+
+showNotification(
+'Analyzing account integrity...'
+);
+
+},1200);
+
+setTimeout(()=>{
+
+showNotification(
+'Establishing monitoring tunnel...'
+);
+
+},2400);
+
+setTimeout(()=>{
+
+showNotification(
+'Threat analysis completed.'
+);
+
+const account = {
+
+id:Date.now(),
+
+platform,
+username,
+email,
+level,
+priority,
+alias,
+notes,
+
+score:
+Math.floor(Math.random()*10)+90,
+
+sessions:
+Math.floor(Math.random()*5)+1,
+
+risk:[
+'LOW',
+'MEDIUM',
+'HIGH'
+][Math.floor(Math.random()*3)],
+
+location:[
+'New York',
+'London',
+'São Paulo',
+'Singapore',
+'Berlin'
+][Math.floor(Math.random()*5)],
+
+lastAccess:
+new Date().toLocaleString(),
+
+status:'ACTIVE'
 
 };
 
-localStorage.setItem('northUser', JSON.stringify(user));
+monitoredAccounts.push(account);
 
-showNotification('Protection Activated Successfully');
+localStorage.setItem(
+'north_accounts',
+JSON.stringify(monitoredAccounts)
+);
 
-document.getElementById('profileName').innerText =
-user.name;
+renderAccounts();
 
-document.getElementById('onboarding').classList.remove('active');
-document.getElementById('plans').classList.add('active');
+closeAccountModal();
 
-}
+showNotification(
+'Monitoring Activated Successfully'
+);
 
-/* =========================================================
-   LOAD USER
-========================================================= */
-
-function loadUser(){
-
-const user = JSON.parse(localStorage.getItem('northUser'));
-
-if(user){
-
-document.getElementById('profileName').innerText =
-user.name;
-
-document.getElementById('onboarding').classList.remove('active');
-
-document.getElementById('dashboard').classList.add('active');
+},3600);
 
 }
 
-}
+/* =====================================================
+   RENDER ACCOUNTS
+===================================================== */
 
-/* =========================================================
-   SELECT PLAN
-========================================================= */
+function renderAccounts(){
 
-function selectPlan(plan){
-
-localStorage.setItem('northPlan', plan);
-
-showNotification(plan + ' Protection Activated');
-
-document.getElementById('plans').classList.remove('active');
-
-document.getElementById('dashboard').classList.add('active');
-
-}
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showScreen(id, el){
-
-document.querySelectorAll('.screen').forEach(screen=>{
-screen.classList.remove('active');
-});
-
-document.getElementById(id).classList.add('active');
-
-document.querySelectorAll('.nav-btn').forEach(btn=>{
-btn.classList.remove('active');
-});
-
-el.classList.add('active');
-
-}
-
-/* =========================================================
-   ALERTS
-========================================================= */
-
-function renderAlerts(){
-
-const alerts = [
-
-'Suspicious login detected',
-'Firewall blocked unauthorized attempt',
-'VPN connection secured',
-'Threat neutralized successfully',
-'Potential phishing activity detected'
-
-];
-
-const container = document.getElementById('alertsContainer');
+const container =
+document.getElementById('accountsContainer');
 
 container.innerHTML='';
 
-alerts.forEach(alert=>{
+monitoredAccounts.forEach(account=>{
 
 container.innerHTML += `
-<div class="alert">
-<div class="alert-icon">⚠</div>
-<div>${alert}</div>
+
+<div class="account-card">
+
+<div class="account-glow"></div>
+
+<div class="account-header">
+
+<div>
+
+<div class="platform">
+${account.platform}
 </div>
+
+<div style="margin-top:6px;color:#94A3B8;">
+@${account.username}
+</div>
+
+</div>
+
+<div class="live-indicator">
+
+<div class="live-dot"></div>
+
+MONITORING
+
+</div>
+
+</div>
+
+<div class="account-grid">
+
+<div class="account-stat">
+<span>Security Score</span>
+<strong>${account.score}%</strong>
+</div>
+
+<div class="account-stat">
+<span>Active Sessions</span>
+<strong>${account.sessions}</strong>
+</div>
+
+<div class="account-stat">
+<span>Risk Level</span>
+<strong>${account.risk}</strong>
+</div>
+
+<div class="account-stat">
+<span>Geo Activity</span>
+<strong>${account.location}</strong>
+</div>
+
+<div class="account-stat">
+<span>Monitoring</span>
+<strong>${account.status}</strong>
+</div>
+
+<div class="account-stat">
+<span>Last Access</span>
+<strong style="font-size:.8rem;">
+${account.lastAccess}
+</strong>
+</div>
+
+</div>
+
+<div class="account-actions">
+
+<button class="primary"
+onclick="openDetails(${account.id})">
+
+View Dashboard
+
+</button>
+
+<button class="secondary-btn"
+onclick="scanAccount(${account.id})">
+
+Run Scan
+
+</button>
+
+<button class="secondary-btn"
+onclick="removeAccount(${account.id})">
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
 `;
 
 });
 
 }
 
-/* =========================================================
-   TOAST
-========================================================= */
+/* =====================================================
+   ACCOUNT DETAILS
+===================================================== */
 
-function showNotification(text){
+function openDetails(id){
 
-const toast = document.getElementById('toast');
+const account =
+monitoredAccounts.find(a=>a.id===id);
 
-toast.innerText = text;
+document.getElementById('detailsPanel')
+.style.display='block';
 
-toast.style.display='block';
+document.getElementById('detailsTitle')
+.innerHTML = `
+${account.platform} Monitoring
+`;
 
-setTimeout(()=>{
-toast.style.display='none';
-},3000);
+document.getElementById('detailsBody')
+.innerHTML = `
+
+<div class="details-section">
+
+<h3>Account Information</h3>
+
+<div class="account-grid">
+
+<div class="account-stat">
+<span>Username</span>
+<strong>${account.username}</strong>
+</div>
+
+<div class="account-stat">
+<span>Email</span>
+<strong>${account.email}</strong>
+</div>
+
+<div class="account-stat">
+<span>Security Level</span>
+<strong>${account.level}</strong>
+</div>
+
+<div class="account-stat">
+<span>Priority</span>
+<strong>${account.priority}</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="details-section">
+
+<h3>Live Monitoring</h3>
+
+<div class="timeline">
+
+<div class="timeline-item">
+Suspicious login attempt detected from Berlin.
+</div>
+
+<div class="timeline-item">
+Unknown browser session analyzed.
+</div>
+
+<div class="timeline-item">
+Geo-location mismatch identified.
+</div>
+
+<div class="timeline-item">
+Credential exposure scan completed.
+</div>
+
+<div class="timeline-item">
+AI anomaly detection triggered.
+</div>
+
+</div>
+
+</div>
+
+<div class="details-section">
+
+<h3>Threat Analysis</h3>
+
+<div class="account-grid">
+
+<div class="account-stat">
+<span>Phishing Risk</span>
+<strong>LOW</strong>
+</div>
+
+<div class="account-stat">
+<span>Password Breach</span>
+<strong>NO EXPOSURE</strong>
+</div>
+
+<div class="account-stat">
+<span>Unauthorized Attempts</span>
+<strong>2 DETECTED</strong>
+</div>
+
+<div class="account-stat">
+<span>Threat Score</span>
+<strong>17%</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="details-section">
+
+<h3>Account Actions</h3>
+
+<div class="account-actions">
+
+<button class="primary">
+Pause Monitoring
+</button>
+
+<button class="secondary-btn">
+Resume Monitoring
+</button>
+
+<button class="secondary-btn">
+Change Password
+</button>
+
+<button class="secondary-btn">
+Security Scan
+</button>
+
+</div>
+
+</div>
+
+`;
 
 }
 
-/* =========================================================
-   LIVE MONITORING
-========================================================= */
+/* =====================================================
+   CLOSE DETAILS
+===================================================== */
 
-function startMonitoring(){
+function closeDetails(){
 
-setInterval(()=>{
-
-const score =
-Math.floor(Math.random()*5) + 95;
-
-document.getElementById('securityScore').innerText =
-score;
-
-},4000);
-
-setInterval(()=>{
-
-const messages = [
-
-'Threat neutralized successfully',
-'New encrypted session created',
-'Suspicious IP blocked',
-'Credential analysis completed',
-'VPN tunnel secured',
-'Dark web scan completed'
-
-];
-
-const random =
-messages[Math.floor(Math.random()*messages.length)];
-
-showNotification(random);
-
-},9000);
+document.getElementById('detailsPanel')
+.style.display='none';
 
 }
 
-/* =========================================================
-   CYBER CHART
-========================================================= */
+/* =====================================================
+   REMOVE ACCOUNT
+===================================================== */
 
-function createCyberChart(){
+function removeAccount(id){
 
-const canvas =
-document.getElementById('threatChart');
+monitoredAccounts =
+monitoredAccounts.filter(
+a=>a.id!==id
+);
 
-const ctx =
-canvas.getContext('2d');
+localStorage.setItem(
+'north_accounts',
+JSON.stringify(monitoredAccounts)
+);
 
-canvas.width = canvas.offsetWidth;
-canvas.height = 220;
+renderAccounts();
 
-let points = [];
-
-for(let i=0;i<30;i++){
-
-points.push(
-Math.random()*120 + 40
+showNotification(
+'Account Removed Successfully'
 );
 
 }
 
-function draw(){
+/* =====================================================
+   SCAN ACCOUNT
+===================================================== */
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+function scanAccount(id){
 
-ctx.beginPath();
+showNotification(
+'Running deep security scan...'
+);
 
-ctx.moveTo(0,canvas.height);
+setTimeout(()=>{
 
-for(let i=0;i<points.length;i++){
+showNotification(
+'Analyzing encrypted sessions...'
+);
 
-const x =
-(i/(points.length-1))*canvas.width;
+},1200);
 
-const y =
-canvas.height - points[i];
+setTimeout(()=>{
 
-ctx.lineTo(x,y);
+showNotification(
+'Threat analysis completed successfully.'
+);
 
-}
-
-ctx.strokeStyle = '#22D3EE';
-ctx.lineWidth = 3;
-ctx.shadowBlur = 20;
-ctx.shadowColor = '#22D3EE';
-
-ctx.stroke();
-
-ctx.lineTo(canvas.width, canvas.height);
-
-ctx.fillStyle='rgba(34,211,238,.08)';
-
-ctx.fill();
-
-for(let i=0;i<points.length;i++){
-
-points[i] += (Math.random()-0.5)*12;
-
-if(points[i] < 20) points[i]=20;
-if(points[i] > 180) points[i]=180;
+},2500);
 
 }
 
-requestAnimationFrame(draw);
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchAccounts(){
+
+const value =
+document.getElementById('searchInput')
+.value.toLowerCase();
+
+const cards =
+document.querySelectorAll('.account-card');
+
+cards.forEach(card=>{
+
+if(
+card.innerText.toLowerCase()
+.includes(value)
+){
+
+card.style.display='block';
+
+}else{
+
+card.style.display='none';
 
 }
 
-draw();
+});
 
 }
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+function filterAccounts(type){
+
+document
+.querySelectorAll('.filter-btn')
+.forEach(btn=>{
+btn.classList.remove('active-filter');
+});
+
+event.target.classList.add('active-filter');
+
+const cards =
+document.querySelectorAll('.account-card');
+
+cards.forEach(card=>{
+
+if(
+type==='all'
+){
+
+card.style.display='block';
+
+}else{
+
+if(
+card.innerText.includes(type)
+){
+
+card.style.display='block';
+
+}else{
+
+card.style.display='none';
+
+}
+
+}
+
+});
+
+}
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+renderAccounts();
+
+/* =====================================================
+   LIVE CYBER EXPERIENCE
+===================================================== */
+
+setInterval(()=>{
+
+const cards =
+document.querySelectorAll('.live-dot');
+
+cards.forEach(dot=>{
+
+dot.style.boxShadow =
+`0 0 ${
+Math.random()*20+10
+}px #22C55E`;
+
+});
+
+},1000);
 
 </script>
-
-</body>
-</html>
