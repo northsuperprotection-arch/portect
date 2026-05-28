@@ -1,1072 +1,912 @@
 <!--
-=========================================================
-NORTH PROTECTION — MULTI ACCOUNT UPDATE
-VERSION: 2.0 ENTERPRISE CYBER MONITORING
-=========================================================
+========================================================
+NORTH PROTECTION — CLEAN MONITORING SETTINGS PATCH
+RESTORES ORIGINAL PREMIUM UI
+ONLY FIXES MONITORING CONFIGURATION SYSTEM
+========================================================
 
-IMPORTANT:
-This code is an UPDATE BLOCK for the original project.
+INSTRUCTIONS:
 
-REPLACE the old Social Monitoring section + JavaScript
-with this new advanced multi-account system.
-
-=========================================================
+1. KEEP YOUR ORIGINAL APP.
+2. ADD THIS CODE BEFORE </body>
+3. DO NOT REMOVE ORIGINAL DASHBOARD.
+4. THIS PATCH ONLY FIXES:
+   - Multi-account support
+   - Monitoring settings
+   - Add/Edit/Remove accounts
+   - Premium modal system
+========================================================
 -->
 
-<!-- =====================================================
-     SOCIAL MONITORING SCREEN
-===================================================== -->
+<!-- ====================================================
+MONITORING SETTINGS PANEL
+==================================================== -->
 
-<section class="screen" id="socialScreen">
+<div class="np-monitoring-settings">
 
-<div class="topbar">
-<div>
-<div class="brand">Monitoring Center</div>
-<div class="small">
-Enterprise Multi-Account Intelligence
-</div>
-</div>
+    <div class="np-settings-header">
+        <div>
+            <div class="np-settings-title">
+                Monitored Social Accounts
+            </div>
 
-<div class="live">
-<div class="dot"></div>
-LIVE
-</div>
-</div>
+            <div class="np-settings-subtitle">
+                Manage protected accounts and monitoring preferences
+            </div>
+        </div>
 
-<!-- =====================================================
-     FILTERS
-===================================================== -->
+        <button class="np-add-account-btn" onclick="openNPModal()">
+            + Add Account
+        </button>
+    </div>
 
-<div class="card">
-
-<div class="section-title">
-Monitoring Filters
-</div>
-
-<div style="display:flex;gap:10px;overflow:auto;padding-bottom:6px;">
-
-<button class="filter-btn active-filter"
-onclick="filterAccounts('all')">
-All
-</button>
-
-<button class="filter-btn"
-onclick="filterAccounts('Instagram')">
-Instagram
-</button>
-
-<button class="filter-btn"
-onclick="filterAccounts('Discord')">
-Discord
-</button>
-
-<button class="filter-btn"
-onclick="filterAccounts('Telegram')">
-Telegram
-</button>
-
-<button class="filter-btn"
-onclick="filterAccounts('Facebook')">
-Facebook
-</button>
-
-<button class="filter-btn"
-onclick="filterAccounts('Email')">
-Emails
-</button>
+    <div id="npAccountsList" class="np-accounts-list"></div>
 
 </div>
 
-<input
-type="text"
-placeholder="Search monitored accounts..."
-id="searchInput"
-onkeyup="searchAccounts()"
-style="margin-top:15px;"
->
+<!-- ====================================================
+MODAL
+==================================================== -->
 
-</div>
+<div id="npModal" class="np-modal">
 
-<!-- =====================================================
-     ADD ACCOUNT BUTTON
-===================================================== -->
+    <div class="np-modal-box">
 
-<div class="card">
+        <div class="np-modal-header">
 
-<button class="primary cyber-btn"
-onclick="openAccountModal()">
+            <div>
+                <div class="np-modal-title">
+                    Secure Account Connection
+                </div>
 
-+ Add Monitored Account
+                <div class="np-modal-subtitle">
+                    Configure monitoring and protection
+                </div>
+            </div>
 
-</button>
+            <button class="np-close-btn" onclick="closeNPModal()">
+                ✕
+            </button>
 
-</div>
+        </div>
 
-<!-- =====================================================
-     ACCOUNT LIST
-===================================================== -->
+        <div class="np-form">
 
-<div id="accountsContainer">
+            <select id="npPlatform">
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>TikTok</option>
+                <option>X/Twitter</option>
+                <option>Discord</option>
+                <option>Telegram</option>
+                <option>Snapchat</option>
+                <option>LinkedIn</option>
+                <option>WhatsApp</option>
+                <option>Gmail</option>
+                <option>Outlook</option>
+                <option>Yahoo</option>
+            </select>
 
-</div>
+            <input
+                type="text"
+                id="npUsername"
+                placeholder="Username / Login"
+            >
 
-</section>
+            <input
+                type="password"
+                id="npPassword"
+                placeholder="Password"
+            >
 
-<!-- =====================================================
-     ACCOUNT MODAL
-===================================================== -->
+            <select id="npMonitoringLevel">
+                <option>Basic</option>
+                <option>Advanced</option>
+                <option>Deep Monitoring</option>
+            </select>
 
-<div id="accountModal" class="modal">
+            <div class="np-modal-actions">
 
-<div class="modal-content">
+                <button
+                    class="np-connect-btn"
+                    onclick="saveNPAccount()"
+                >
+                    Connect Account
+                </button>
 
-<div class="modal-header">
+                <button
+                    class="np-cancel-btn"
+                    onclick="closeNPModal()"
+                >
+                    Cancel
+                </button>
 
-<h2>Secure Account Connection</h2>
+            </div>
 
-<div class="close-modal"
-onclick="closeAccountModal()">
-✕
-</div>
+        </div>
 
-</div>
-
-<div class="modal-body">
-
-<select id="accountPlatform">
-
-<option>Instagram</option>
-<option>Facebook</option>
-<option>TikTok</option>
-<option>X/Twitter</option>
-<option>Discord</option>
-<option>Telegram</option>
-<option>WhatsApp</option>
-<option>LinkedIn</option>
-<option>Snapchat</option>
-<option>Email</option>
-
-</select>
-
-<input type="text"
-id="accountUsername"
-placeholder="Username">
-
-<input type="text"
-id="accountEmail"
-placeholder="Email / Login">
-
-<input type="password"
-id="accountPassword"
-placeholder="Password">
-
-<select id="monitorLevel">
-
-<option>Basic Monitoring</option>
-<option>Advanced Monitoring</option>
-<option>Deep Intelligence Monitoring</option>
-
-</select>
-
-<select id="securityPriority">
-
-<option>Low Priority</option>
-<option>Medium Priority</option>
-<option>High Priority</option>
-<option>Critical Priority</option>
-
-</select>
-
-<input type="text"
-id="deviceAlias"
-placeholder="Device Alias">
-
-<textarea
-id="accountNotes"
-placeholder="Notes"
-style="
-width:100%;
-height:100px;
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.08);
-color:white;
-resize:none;
-margin-bottom:15px;
-"></textarea>
-
-<button class="primary"
-onclick="connectAccount()">
-
-Connect Account
-
-</button>
-
-<button class="secondary-btn"
-onclick="closeAccountModal()">
-
-Cancel
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =====================================================
-     ACCOUNT DETAILS PANEL
-===================================================== -->
-
-<div id="detailsPanel" class="details-panel">
-
-<div class="details-content">
-
-<div class="modal-header">
-
-<h2 id="detailsTitle">
-Monitoring Dashboard
-</h2>
-
-<div class="close-modal"
-onclick="closeDetails()">
-✕
-</div>
-
-</div>
-
-<div id="detailsBody">
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 <style>
 
-/* =====================================================
-   FILTERS
-===================================================== */
+/* ====================================================
+MONITORING SETTINGS
+==================================================== */
 
-.filter-btn{
-min-width:100px;
-padding:12px 16px;
-border-radius:999px;
-border:none;
-background:rgba(255,255,255,.05);
-color:white;
-font-size:.85rem;
+.np-monitoring-settings{
+    margin-top:24px;
+    padding:24px;
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,.03),
+        rgba(255,255,255,.015)
+    );
+
+    border:1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(16px);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.25);
 }
 
-.active-filter{
-background:linear-gradient(135deg,#2563EB,#22D3EE);
+/* ====================================================
+HEADER
+==================================================== */
+
+.np-settings-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
 }
 
-/* =====================================================
-   MODAL
-===================================================== */
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.75);
-backdrop-filter:blur(12px);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:999;
-padding:20px;
+.np-settings-title{
+    font-size:1.2rem;
+    font-weight:700;
+    color:#F8FAFC;
 }
 
-.modal-content{
-width:100%;
-max-width:520px;
-background:
-linear-gradient(135deg,
-rgba(11,17,32,.95),
-rgba(5,5,5,.95));
-border:1px solid rgba(255,255,255,.08);
-border-radius:30px;
-overflow:hidden;
-box-shadow:
-0 0 50px rgba(34,211,238,.18);
-animation:modalIn .4s ease;
+.np-settings-subtitle{
+    color:#94A3B8;
+    margin-top:6px;
+    font-size:.9rem;
 }
 
-@keyframes modalIn{
-from{
-transform:translateY(40px) scale(.9);
-opacity:0;
-}
-to{
-transform:translateY(0) scale(1);
-opacity:1;
-}
-}
+/* ====================================================
+BUTTON
+==================================================== */
 
-.modal-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:24px;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
+.np-add-account-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
 
-.modal-body{
-padding:24px;
-}
+    padding:14px 22px;
 
-.close-modal{
-font-size:1.4rem;
-cursor:pointer;
-color:#94A3B8;
-}
+    border-radius:14px;
 
-.secondary-btn{
-margin-top:12px;
-background:rgba(255,255,255,.06);
-color:white;
+    color:white;
+    font-weight:600;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563EB,
+        #22D3EE
+    );
+
+    box-shadow:
+    0 0 18px rgba(34,211,238,.25);
+
+    transition:.25s;
 }
 
-/* =====================================================
-   ACCOUNT CARD
-===================================================== */
-
-.account-card{
-position:relative;
-padding:22px;
-border-radius:28px;
-margin-bottom:18px;
-background:
-linear-gradient(135deg,
-rgba(11,17,32,.82),
-rgba(5,5,5,.88));
-
-border:1px solid rgba(34,211,238,.12);
-
-overflow:hidden;
-
-box-shadow:
-0 0 25px rgba(34,211,238,.08);
+.np-add-account-btn:active{
+    transform:scale(.97);
 }
 
-.account-card::before{
-content:'';
-position:absolute;
-inset:0;
-background:
-linear-gradient(135deg,
-rgba(255,255,255,.08),
-transparent 35%);
-pointer-events:none;
+/* ====================================================
+ACCOUNT LIST
+==================================================== */
+
+.np-accounts-list{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
 }
 
-.account-glow{
-position:absolute;
-width:160px;
-height:160px;
-background:rgba(34,211,238,.12);
-filter:blur(70px);
-right:-50px;
-top:-50px;
+/* ====================================================
+ACCOUNT CARD
+==================================================== */
+
+.np-account-card{
+
+    padding:18px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,.03),
+        rgba(255,255,255,.02)
+    );
+
+    border:1px solid rgba(255,255,255,.06);
+
+    position:relative;
+
+    overflow:hidden;
 }
 
-.account-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
+.np-account-card::before{
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,.04),
+        transparent 45%
+    );
+
+    pointer-events:none;
 }
 
-.platform{
-font-size:1.1rem;
-font-weight:700;
+.np-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
 }
 
-.live-indicator{
-display:flex;
-align-items:center;
-gap:8px;
-font-size:.8rem;
-color:#22C55E;
+.np-platform{
+    font-weight:700;
+    color:#F8FAFC;
+    font-size:1rem;
 }
 
-.live-dot{
-width:10px;
-height:10px;
-border-radius:50%;
-background:#22C55E;
-box-shadow:0 0 14px #22C55E;
-animation:blink 1s infinite;
+.np-user{
+    color:#94A3B8;
+    margin-top:4px;
+    font-size:.9rem;
 }
 
-.account-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:16px;
+.np-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:.8rem;
+    color:#22C55E;
 }
 
-.account-stat{
-padding:14px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.05);
+.np-status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#22C55E;
+
+    box-shadow:
+    0 0 12px #22C55E;
 }
 
-.account-stat span{
-display:block;
-font-size:.78rem;
-color:#94A3B8;
-margin-bottom:8px;
+/* ====================================================
+CARD INFO
+==================================================== */
+
+.np-card-info{
+    margin-top:16px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-.account-stat strong{
-font-size:1rem;
+.np-info-box{
+    padding:12px;
+    border-radius:14px;
+
+    background:
+    rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.04);
 }
 
-.account-actions{
-display:flex;
-gap:10px;
-margin-top:20px;
-flex-wrap:wrap;
+.np-info-label{
+    color:#94A3B8;
+    font-size:.78rem;
 }
 
-.account-actions button{
-flex:1;
-min-width:120px;
-font-size:.85rem;
-padding:12px;
-border-radius:16px;
+.np-info-value{
+    margin-top:6px;
+    color:white;
+    font-weight:600;
 }
 
-/* =====================================================
-   DETAILS PANEL
-===================================================== */
+/* ====================================================
+ACTIONS
+==================================================== */
 
-.details-panel{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-backdrop-filter:blur(18px);
-display:none;
-z-index:1000;
-overflow:auto;
-padding:20px;
+.np-actions{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap:wrap;
 }
 
-.details-content{
-max-width:900px;
-margin:auto;
-background:
-linear-gradient(135deg,
-rgba(11,17,32,.96),
-rgba(5,5,5,.96));
-border-radius:32px;
-border:1px solid rgba(255,255,255,.08);
-overflow:hidden;
+.np-actions button{
+    flex:1;
+    min-width:110px;
+
+    border:none;
+    cursor:pointer;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.2s;
 }
 
-.details-section{
-padding:24px;
-border-bottom:1px solid rgba(255,255,255,.05);
+.np-actions button:active{
+    transform:scale(.97);
 }
 
-.details-section h3{
-margin-bottom:18px;
-font-size:1.1rem;
+/* ====================================================
+MODAL
+==================================================== */
+
+.np-modal{
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+    rgba(0,0,0,.7);
+
+    backdrop-filter:blur(10px);
+
+    z-index:99999;
 }
 
-.timeline{
-display:flex;
-flex-direction:column;
-gap:12px;
+.np-modal-box{
+
+    width:100%;
+    max-width:440px;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(11,17,32,.96),
+        rgba(5,5,5,.96)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 0 40px rgba(34,211,238,.18);
+
+    animation:npModalIn .28s ease;
 }
 
-.timeline-item{
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.05);
+@keyframes npModalIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
 }
 
-.cyber-btn{
-height:70px;
-font-size:1.1rem;
-border-radius:24px;
-background:
-linear-gradient(135deg,
-#2563EB,
-#22D3EE);
-box-shadow:
-0 0 30px rgba(34,211,238,.25);
+.np-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:22px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.05);
+}
+
+.np-modal-title{
+    font-size:1.1rem;
+    font-weight:700;
+    color:white;
+}
+
+.np-modal-subtitle{
+    margin-top:4px;
+    color:#94A3B8;
+    font-size:.85rem;
+}
+
+.np-close-btn{
+    background:none;
+    border:none;
+    color:#94A3B8;
+    font-size:1.2rem;
+    cursor:pointer;
+}
+
+/* ====================================================
+FORM
+==================================================== */
+
+.np-form{
+    padding:22px;
+
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.np-form input,
+.np-form select{
+
+    width:100%;
+
+    border:none;
+    outline:none;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.05);
+}
+
+.np-modal-actions{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
+}
+
+.np-connect-btn{
+    flex:1;
+
+    border:none;
+    cursor:pointer;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    color:white;
+    font-weight:600;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563EB,
+        #22D3EE
+    );
+}
+
+.np-cancel-btn{
+    flex:1;
+
+    border:none;
+    cursor:pointer;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,.05);
+}
+
+/* ====================================================
+MOBILE
+==================================================== */
+
+@media(max-width:700px){
+
+    .np-card-info{
+        grid-template-columns:1fr;
+    }
+
+    .np-actions{
+        flex-direction:column;
+    }
+
 }
 
 </style>
 
 <script>
 
-/* =====================================================
-   MULTI ACCOUNT STORAGE
-===================================================== */
+/* ====================================================
+NORTH PROTECTION
+MONITORING SETTINGS SYSTEM
+==================================================== */
 
-let monitoredAccounts =
+let npAccounts =
 JSON.parse(
-localStorage.getItem('north_accounts')
+localStorage.getItem('np_monitored_accounts')
 ) || [];
 
-/* =====================================================
-   OPEN/CLOSE MODAL
-===================================================== */
+let npEditId = null;
 
-function openAccountModal(){
+/* ====================================================
+OPEN/CLOSE MODAL
+==================================================== */
 
-document.getElementById('accountModal')
-.style.display='flex';
+function openNPModal(){
 
-}
-
-function closeAccountModal(){
-
-document.getElementById('accountModal')
-.style.display='none';
+    document
+    .getElementById('npModal')
+    .style.display='flex';
 
 }
 
-/* =====================================================
-   CONNECT ACCOUNT
-===================================================== */
+function closeNPModal(){
 
-function connectAccount(){
+    document
+    .getElementById('npModal')
+    .style.display='none';
 
-const platform =
-document.getElementById('accountPlatform').value;
+    clearNPForm();
+}
 
-const username =
-document.getElementById('accountUsername').value;
+/* ====================================================
+CLEAR FORM
+==================================================== */
 
-const email =
-document.getElementById('accountEmail').value;
+function clearNPForm(){
 
-const level =
-document.getElementById('monitorLevel').value;
+    npEditId = null;
 
-const priority =
-document.getElementById('securityPriority').value;
-
-const alias =
-document.getElementById('deviceAlias').value;
-
-const notes =
-document.getElementById('accountNotes').value;
-
-/* =====================================================
-   CYBER CONNECTION ANIMATION
-===================================================== */
-
-showNotification(
-'Securing encrypted session...'
-);
-
-setTimeout(()=>{
-
-showNotification(
-'Analyzing account integrity...'
-);
-
-},1200);
-
-setTimeout(()=>{
-
-showNotification(
-'Establishing monitoring tunnel...'
-);
-
-},2400);
-
-setTimeout(()=>{
-
-showNotification(
-'Threat analysis completed.'
-);
-
-const account = {
-
-id:Date.now(),
-
-platform,
-username,
-email,
-level,
-priority,
-alias,
-notes,
-
-score:
-Math.floor(Math.random()*10)+90,
-
-sessions:
-Math.floor(Math.random()*5)+1,
-
-risk:[
-'LOW',
-'MEDIUM',
-'HIGH'
-][Math.floor(Math.random()*3)],
-
-location:[
-'New York',
-'London',
-'São Paulo',
-'Singapore',
-'Berlin'
-][Math.floor(Math.random()*5)],
-
-lastAccess:
-new Date().toLocaleString(),
-
-status:'ACTIVE'
-
-};
-
-monitoredAccounts.push(account);
-
-localStorage.setItem(
-'north_accounts',
-JSON.stringify(monitoredAccounts)
-);
-
-renderAccounts();
-
-closeAccountModal();
-
-showNotification(
-'Monitoring Activated Successfully'
-);
-
-},3600);
+    document.getElementById('npUsername').value='';
+    document.getElementById('npPassword').value='';
 
 }
 
-/* =====================================================
-   RENDER ACCOUNTS
-===================================================== */
+/* ====================================================
+SAVE ACCOUNT
+==================================================== */
 
-function renderAccounts(){
+function saveNPAccount(){
 
-const container =
-document.getElementById('accountsContainer');
+    const platform =
+    document.getElementById('npPlatform').value;
 
-container.innerHTML='';
+    const username =
+    document.getElementById('npUsername').value;
 
-monitoredAccounts.forEach(account=>{
+    const password =
+    document.getElementById('npPassword').value;
 
-container.innerHTML += `
+    const level =
+    document.getElementById('npMonitoringLevel').value;
 
-<div class="account-card">
+    if(!username || !password){
+        return;
+    }
 
-<div class="account-glow"></div>
+    const account = {
 
-<div class="account-header">
+        id: npEditId || Date.now(),
 
-<div>
+        platform,
+        username,
+        password,
+        level,
 
-<div class="platform">
-${account.platform}
-</div>
+        active:true,
 
-<div style="margin-top:6px;color:#94A3B8;">
-@${account.username}
-</div>
+        lastScan:
+        new Date().toLocaleString()
 
-</div>
+    };
 
-<div class="live-indicator">
+    if(npEditId){
 
-<div class="live-dot"></div>
+        npAccounts =
+        npAccounts.map(acc =>
+            acc.id === npEditId
+            ? account
+            : acc
+        );
 
-MONITORING
+    }else{
 
-</div>
+        npAccounts.push(account);
 
-</div>
+    }
 
-<div class="account-grid">
+    localStorage.setItem(
+        'np_monitored_accounts',
+        JSON.stringify(npAccounts)
+    );
 
-<div class="account-stat">
-<span>Security Score</span>
-<strong>${account.score}%</strong>
-</div>
+    renderNPAccounts();
 
-<div class="account-stat">
-<span>Active Sessions</span>
-<strong>${account.sessions}</strong>
-</div>
-
-<div class="account-stat">
-<span>Risk Level</span>
-<strong>${account.risk}</strong>
-</div>
-
-<div class="account-stat">
-<span>Geo Activity</span>
-<strong>${account.location}</strong>
-</div>
-
-<div class="account-stat">
-<span>Monitoring</span>
-<strong>${account.status}</strong>
-</div>
-
-<div class="account-stat">
-<span>Last Access</span>
-<strong style="font-size:.8rem;">
-${account.lastAccess}
-</strong>
-</div>
-
-</div>
-
-<div class="account-actions">
-
-<button class="primary"
-onclick="openDetails(${account.id})">
-
-View Dashboard
-
-</button>
-
-<button class="secondary-btn"
-onclick="scanAccount(${account.id})">
-
-Run Scan
-
-</button>
-
-<button class="secondary-btn"
-onclick="removeAccount(${account.id})">
-
-Remove
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
+    closeNPModal();
 
 }
 
-/* =====================================================
-   ACCOUNT DETAILS
-===================================================== */
+/* ====================================================
+RENDER ACCOUNTS
+==================================================== */
 
-function openDetails(id){
+function renderNPAccounts(){
 
-const account =
-monitoredAccounts.find(a=>a.id===id);
+    const container =
+    document.getElementById('npAccountsList');
 
-document.getElementById('detailsPanel')
-.style.display='block';
+    if(!container) return;
 
-document.getElementById('detailsTitle')
-.innerHTML = `
-${account.platform} Monitoring
-`;
+    container.innerHTML='';
 
-document.getElementById('detailsBody')
-.innerHTML = `
+    npAccounts.forEach(account => {
 
-<div class="details-section">
+        const masked =
+        '•'.repeat(
+            Math.max(6, account.password.length)
+        );
 
-<h3>Account Information</h3>
+        container.innerHTML += `
 
-<div class="account-grid">
+        <div class="np-account-card">
 
-<div class="account-stat">
-<span>Username</span>
-<strong>${account.username}</strong>
-</div>
+            <div class="np-card-top">
 
-<div class="account-stat">
-<span>Email</span>
-<strong>${account.email}</strong>
-</div>
+                <div>
 
-<div class="account-stat">
-<span>Security Level</span>
-<strong>${account.level}</strong>
-</div>
+                    <div class="np-platform">
+                        ${getPlatformIcon(account.platform)}
+                        ${account.platform}
+                    </div>
 
-<div class="account-stat">
-<span>Priority</span>
-<strong>${account.priority}</strong>
-</div>
+                    <div class="np-user">
+                        ${account.username}
+                    </div>
 
-</div>
+                </div>
 
-</div>
+                <div class="np-status">
 
-<div class="details-section">
+                    <div class="np-status-dot"></div>
 
-<h3>Live Monitoring</h3>
+                    ${
+                        account.active
+                        ? 'PROTECTED'
+                        : 'PAUSED'
+                    }
 
-<div class="timeline">
+                </div>
 
-<div class="timeline-item">
-Suspicious login attempt detected from Berlin.
-</div>
+            </div>
 
-<div class="timeline-item">
-Unknown browser session analyzed.
-</div>
+            <div class="np-card-info">
 
-<div class="timeline-item">
-Geo-location mismatch identified.
-</div>
+                <div class="np-info-box">
 
-<div class="timeline-item">
-Credential exposure scan completed.
-</div>
+                    <div class="np-info-label">
+                        Password
+                    </div>
 
-<div class="timeline-item">
-AI anomaly detection triggered.
-</div>
+                    <div class="np-info-value">
+                        ${masked}
+                    </div>
 
-</div>
+                </div>
 
-</div>
+                <div class="np-info-box">
 
-<div class="details-section">
+                    <div class="np-info-label">
+                        Monitoring
+                    </div>
 
-<h3>Threat Analysis</h3>
+                    <div class="np-info-value">
+                        ${account.level}
+                    </div>
 
-<div class="account-grid">
+                </div>
 
-<div class="account-stat">
-<span>Phishing Risk</span>
-<strong>LOW</strong>
-</div>
+                <div class="np-info-box">
 
-<div class="account-stat">
-<span>Password Breach</span>
-<strong>NO EXPOSURE</strong>
-</div>
+                    <div class="np-info-label">
+                        Last Scan
+                    </div>
 
-<div class="account-stat">
-<span>Unauthorized Attempts</span>
-<strong>2 DETECTED</strong>
-</div>
+                    <div class="np-info-value">
+                        ${account.lastScan}
+                    </div>
 
-<div class="account-stat">
-<span>Threat Score</span>
-<strong>17%</strong>
-</div>
+                </div>
 
-</div>
+                <div class="np-info-box">
 
-</div>
+                    <div class="np-info-label">
+                        Protection
+                    </div>
 
-<div class="details-section">
+                    <div class="np-info-value">
+                        Active Shield
+                    </div>
 
-<h3>Account Actions</h3>
+                </div>
 
-<div class="account-actions">
+            </div>
 
-<button class="primary">
-Pause Monitoring
-</button>
+            <div class="np-actions">
 
-<button class="secondary-btn">
-Resume Monitoring
-</button>
+                <button onclick="editNPAccount(${account.id})">
+                    Edit
+                </button>
 
-<button class="secondary-btn">
-Change Password
-</button>
+                <button onclick="toggleNPAccount(${account.id})">
+                    ${
+                        account.active
+                        ? 'Pause Monitoring'
+                        : 'Enable Monitoring'
+                    }
+                </button>
 
-<button class="secondary-btn">
-Security Scan
-</button>
+                <button onclick="removeNPAccount(${account.id})">
+                    Remove
+                </button>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-`;
+        `;
+
+    });
 
 }
 
-/* =====================================================
-   CLOSE DETAILS
-===================================================== */
+/* ====================================================
+EDIT
+==================================================== */
 
-function closeDetails(){
+function editNPAccount(id){
 
-document.getElementById('detailsPanel')
-.style.display='none';
+    const acc =
+    npAccounts.find(a => a.id === id);
 
-}
+    if(!acc) return;
 
-/* =====================================================
-   REMOVE ACCOUNT
-===================================================== */
+    npEditId = id;
 
-function removeAccount(id){
+    document.getElementById('npPlatform').value =
+    acc.platform;
 
-monitoredAccounts =
-monitoredAccounts.filter(
-a=>a.id!==id
-);
+    document.getElementById('npUsername').value =
+    acc.username;
 
-localStorage.setItem(
-'north_accounts',
-JSON.stringify(monitoredAccounts)
-);
+    document.getElementById('npPassword').value =
+    acc.password;
 
-renderAccounts();
+    document.getElementById('npMonitoringLevel').value =
+    acc.level;
 
-showNotification(
-'Account Removed Successfully'
-);
+    openNPModal();
 
 }
 
-/* =====================================================
-   SCAN ACCOUNT
-===================================================== */
+/* ====================================================
+REMOVE
+==================================================== */
 
-function scanAccount(id){
+function removeNPAccount(id){
 
-showNotification(
-'Running deep security scan...'
-);
+    npAccounts =
+    npAccounts.filter(a => a.id !== id);
 
-setTimeout(()=>{
+    localStorage.setItem(
+        'np_monitored_accounts',
+        JSON.stringify(npAccounts)
+    );
 
-showNotification(
-'Analyzing encrypted sessions...'
-);
-
-},1200);
-
-setTimeout(()=>{
-
-showNotification(
-'Threat analysis completed successfully.'
-);
-
-},2500);
+    renderNPAccounts();
 
 }
 
-/* =====================================================
-   SEARCH
-===================================================== */
+/* ====================================================
+TOGGLE
+==================================================== */
 
-function searchAccounts(){
+function toggleNPAccount(id){
 
-const value =
-document.getElementById('searchInput')
-.value.toLowerCase();
+    npAccounts =
+    npAccounts.map(acc => {
 
-const cards =
-document.querySelectorAll('.account-card');
+        if(acc.id === id){
 
-cards.forEach(card=>{
+            acc.active = !acc.active;
 
-if(
-card.innerText.toLowerCase()
-.includes(value)
-){
+        }
 
-card.style.display='block';
+        return acc;
 
-}else{
+    });
 
-card.style.display='none';
+    localStorage.setItem(
+        'np_monitored_accounts',
+        JSON.stringify(npAccounts)
+    );
 
-}
-
-});
+    renderNPAccounts();
 
 }
 
-/* =====================================================
-   FILTERS
-===================================================== */
+/* ====================================================
+PLATFORM ICONS
+==================================================== */
 
-function filterAccounts(type){
+function getPlatformIcon(platform){
 
-document
-.querySelectorAll('.filter-btn')
-.forEach(btn=>{
-btn.classList.remove('active-filter');
-});
+    const icons = {
 
-event.target.classList.add('active-filter');
+        Instagram:'📸',
+        Facebook:'📘',
+        TikTok:'🎵',
+        'X/Twitter':'✖️',
+        Discord:'🎮',
+        Telegram:'📨',
+        Snapchat:'👻',
+        LinkedIn:'💼',
+        WhatsApp:'💬',
+        Gmail:'✉️',
+        Outlook:'📧',
+        Yahoo:'📩'
 
-const cards =
-document.querySelectorAll('.account-card');
+    };
 
-cards.forEach(card=>{
-
-if(
-type==='all'
-){
-
-card.style.display='block';
-
-}else{
-
-if(
-card.innerText.includes(type)
-){
-
-card.style.display='block';
-
-}else{
-
-card.style.display='none';
+    return icons[platform] || '🔐';
 
 }
 
-}
+/* ====================================================
+INIT
+==================================================== */
 
-});
-
-}
-
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
-
-renderAccounts();
-
-/* =====================================================
-   LIVE CYBER EXPERIENCE
-===================================================== */
-
-setInterval(()=>{
-
-const cards =
-document.querySelectorAll('.live-dot');
-
-cards.forEach(dot=>{
-
-dot.style.boxShadow =
-`0 0 ${
-Math.random()*20+10
-}px #22C55E`;
-
-});
-
-},1000);
+renderNPAccounts();
 
 </script>
