@@ -1,3 +1,6 @@
+# North Protection — Ultra Premium Complete HTML
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +9,6 @@
 <title>North Protection</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -16,16 +18,11 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 :root{
---bg:#050505;
---navy:#0B1120;
 --blue:#2563EB;
 --cyan:#22D3EE;
 --green:#22C55E;
 --red:#EF4444;
---white:#F8FAFC;
 --gray:#94A3B8;
---glass:rgba(255,255,255,.05);
---border:rgba(255,255,255,.08);
 --shadow:0 10px 40px rgba(0,0,0,.5);
 }
 
@@ -38,8 +35,6 @@ color:white;
 height:100vh;
 overflow:hidden;
 }
-
-/* BACKGROUND */
 
 .cyber-bg{
 position:fixed;
@@ -59,8 +54,7 @@ animation:gridMove 15s linear infinite;
 }
 
 @keyframes gridMove{
-from{transform:translateY(0);}
-to{transform:translateY(40px);}
+from{transform:translateY(0);}to{transform:translateY(40px);}
 }
 
 .glow{
@@ -86,8 +80,6 @@ bottom:-100px;
 right:-100px;
 }
 
-/* SPLASH */
-
 #splash{
 position:fixed;
 inset:0;
@@ -96,8 +88,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-background:
-linear-gradient(135deg,#010101,#08111e,#010101);
+background:linear-gradient(135deg,#010101,#08111e,#010101);
 transition:1s;
 }
 
@@ -111,15 +102,12 @@ align-items:center;
 justify-content:center;
 font-size:54px;
 color:var(--cyan);
-box-shadow:
-0 0 40px rgba(34,211,238,.4),
-inset 0 0 20px rgba(34,211,238,.2);
+box-shadow:0 0 40px rgba(34,211,238,.4), inset 0 0 20px rgba(34,211,238,.2);
 animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
-0%,100%{transform:scale(1);}
-50%{transform:scale(1.08);}
+0%,100%{transform:scale(1);}50%{transform:scale(1.08);}
 }
 
 .logo{
@@ -153,11 +141,8 @@ animation:load 2s infinite;
 }
 
 @keyframes load{
-0%{transform:translateX(-100%);}
-100%{transform:translateX(400%);}
+0%{transform:translateX(-100%);}100%{transform:translateX(400%);}
 }
-
-/* APP */
 
 .app{
 position:relative;
@@ -183,14 +168,7 @@ animation:fade .5s ease;
 }
 
 @keyframes fade{
-from{
-opacity:0;
-transform:translateY(15px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}
 }
 
 .card{
@@ -207,34 +185,6 @@ box-shadow:var(--shadow);
 font-size:1.2rem;
 margin-bottom:18px;
 font-weight:700;
-}
-
-input,select{
-width:100%;
-padding:16px;
-margin-bottom:14px;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.04);
-color:white;
-font-size:1rem;
-outline:none;
-}
-
-button{
-border:none;
-cursor:pointer;
-padding:16px;
-border-radius:18px;
-font-size:1rem;
-font-weight:600;
-width:100%;
-transition:.3s;
-}
-
-.primary{
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-color:white;
 }
 
 .topbar{
@@ -266,8 +216,34 @@ box-shadow:0 0 12px var(--green);
 animation:blink 1s infinite;
 }
 
-@keyframes blink{
-50%{opacity:.4;}
+@keyframes blink{50%{opacity:.4;}}
+
+input,select{
+width:100%;
+padding:16px;
+margin-bottom:14px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.04);
+color:white;
+font-size:1rem;
+outline:none;
+}
+
+button{
+border:none;
+cursor:pointer;
+padding:16px;
+border-radius:18px;
+font-size:1rem;
+font-weight:600;
+width:100%;
+transition:.3s;
+}
+
+.primary{
+background:linear-gradient(135deg,var(--blue),var(--cyan));
+color:white;
 }
 
 .bottom-nav{
@@ -312,7 +288,7 @@ z-index:999;
 display:none;
 }
 
-.social-item{
+.social-item,.device-card{
 padding:18px;
 border-radius:20px;
 margin-bottom:14px;
@@ -320,17 +296,73 @@ background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.05);
 }
 
-.status-green{
-color:var(--green);
+.status-green{color:var(--green);}
+.status-red{color:var(--red);}
+
+.stat-box{
+background:rgba(255,255,255,.03);
+padding:18px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.05);
 }
 
-.status-red{
-color:var(--red);
+.stat-box h3{
+font-size:.8rem;
+margin-bottom:10px;
+color:#94A3B8;
+}
+
+.stat-box h1{
+font-size:2rem;
+margin-bottom:6px;
+}
+
+.network-map{
+position:relative;
+height:220px;
+border-radius:24px;
+overflow:hidden;
+background:radial-gradient(circle at center, rgba(34,211,238,.08), transparent 70%);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.pulse{
+position:absolute;
+width:14px;
+height:14px;
+border-radius:50%;
+background:#22D3EE;
+box-shadow:0 0 20px #22D3EE;
+animation:pulseMap 2s infinite;
+}
+
+.p1{top:30%;left:20%;}
+.p2{top:50%;left:50%;}
+.p3{top:35%;right:20%;}
+.p4{bottom:25%;left:40%;}
+
+@keyframes pulseMap{
+0%{transform:scale(1);opacity:1;}100%{transform:scale(3);opacity:0;}
+}
+
+#terminal{
+height:220px;
+overflow:hidden;
+background:#02060c;
+border-radius:20px;
+padding:18px;
+font-family:monospace;
+font-size:.88rem;
+border:1px solid rgba(34,211,238,.08);
+}
+
+.terminal-line{
+margin-bottom:10px;
+color:#22D3EE;
 }
 
 </style>
 </head>
-
 <body>
 
 <div class="cyber-bg">
@@ -339,97 +371,62 @@ color:var(--red);
 <div class="glow glow2"></div>
 </div>
 
-<!-- SPLASH -->
-
 <div id="splash">
-
 <div class="shield">🛡</div>
-
-<div class="logo">
-NORTH PROTECTION
+<div class="logo">NORTH PROTECTION</div>
+<div class="loading" id="loadingText">Initializing Secure Environment</div>
+<div class="loader"><span></span></div>
 </div>
-
-<div class="loading" id="loadingText">
-Initializing Secure Environment
-</div>
-
-<div class="loader">
-<span></span>
-</div>
-
-</div>
-
-<!-- APP -->
 
 <div class="app" id="app">
-
-<!-- DASHBOARD -->
 
 <section class="screen active" id="dashboard">
 
 <div class="topbar">
-<div>
 <div class="brand">North Protection</div>
+<div class="live"><div class="dot"></div>LIVE MONITORING</div>
 </div>
 
-<div class="live">
-<div class="dot"></div>
-LIVE MONITORING
+<div class="card">
+<div class="section-title">Security Status</div>
+<h1 style="font-size:4rem;margin-bottom:10px;">98</h1>
+<div class="status-green">ALL SYSTEMS SECURE</div>
+</div>
+
+<div class="card">
+<div class="section-title">AI Threat Intelligence</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+<div class="stat-box"><h3>Threats Blocked</h3><h1 id="threatsBlocked">248</h1><p class="status-green">+12 Today</p></div>
+<div class="stat-box"><h3>Encrypted Sessions</h3><h1 id="encryptedSessions">92</h1><p class="status-green">ACTIVE</p></div>
+<div class="stat-box"><h3>Credential Risk</h3><h1 class="status-green">LOW</h1><p>Protected</p></div>
+<div class="stat-box"><h3>Dark Web Scan</h3><h1>99%</h1><p class="status-green">CLEAN</p></div>
 </div>
 </div>
 
 <div class="card">
-
-<div class="section-title">
-Security Status
+<div class="section-title">Global Security Network</div>
+<div class="network-map">
+<div class="pulse p1"></div>
+<div class="pulse p2"></div>
+<div class="pulse p3"></div>
+<div class="pulse p4"></div>
 </div>
-
-<h1 style="font-size:4rem;margin-bottom:10px;">
-98
-</h1>
-
-<div class="status-green">
-ALL SYSTEMS SECURE
-</div>
-
 </div>
 
 <div class="card">
-
-<div class="section-title">
-Threat Alerts
+<div class="section-title">Live Security Terminal</div>
+<div id="terminal">
+<div class="terminal-line">> Initializing AI protection layer...</div>
 </div>
-
-<div class="social-item">
-⚠ Suspicious login blocked
-</div>
-
-<div class="social-item">
-🛡 Firewall secured unknown IP
-</div>
-
-<div class="social-item">
-🔒 VPN encrypted successfully
-</div>
-
 </div>
 
 </section>
 
-<!-- SOCIAL -->
-
 <section class="screen" id="socialScreen">
-
-<div class="topbar">
-<div class="brand">Social Monitoring</div>
-</div>
+<div class="topbar"><div class="brand">Social Monitoring</div></div>
 
 <div class="card">
-
-<div class="section-title">
-Add Social Account
-</div>
-
+<div class="section-title">Add Social Account</div>
 <select id="socialPlatform">
 <option>Instagram</option>
 <option>Facebook</option>
@@ -437,96 +434,27 @@ Add Social Account
 <option>Discord</option>
 <option>Telegram</option>
 <option>LinkedIn</option>
-<option>X (Twitter)</option>
-<option>Snapchat</option>
 </select>
-
 <input type="text" id="socialLogin" placeholder="Account Login">
-
 <input type="password" id="socialPassword" placeholder="Account Password">
-
-<button class="primary" onclick="addSocialAccount()">
-Add Account
-</button>
-
+<button class="primary" onclick="addSocialAccount()">Add Account</button>
 </div>
 
 <div id="socialAccountsContainer"></div>
-
 </section>
-
-<!-- PROFILE -->
 
 <section class="screen" id="profileScreen">
-
-<div class="topbar">
-<div class="brand">Profile</div>
-</div>
-
+<div class="topbar"><div class="brand">Profile</div></div>
 <div class="card">
-
-<h2 id="profileName">
-Protected User
-</h2>
-
-<p style="margin-top:10px;color:#94A3B8;">
-North Elite Member
-</p>
-
+<h2 id="profileName">Protected User</h2>
+<p style="margin-top:10px;color:#94A3B8;">North Elite Member</p>
 </div>
-
 </section>
-
-<!-- SETTINGS -->
-
-<section class="screen" id="settingsScreen">
-
-<div class="topbar">
-<div class="brand">Settings</div>
-</div>
-
-<div class="card">
-
-<div class="social-item">
-Enable Notifications — ON
-</div>
-
-<div class="social-item">
-VPN Protection — ACTIVE
-</div>
-
-<div class="social-item">
-Auto Security Scan — ENABLED
-</div>
-
-</div>
-
-</section>
-
-<!-- NAV -->
 
 <div class="bottom-nav">
-
-<div class="nav-btn active" onclick="showScreen('dashboard', this)">
-🏠
-<span>Dashboard</span>
-</div>
-
-<div class="nav-btn" onclick="showScreen('socialScreen', this)">
-📡
-<span>Social</span>
-</div>
-
-<div class="nav-btn" onclick="showScreen('profileScreen', this)">
-👤
-<span>Profile</span>
-</div>
-
-<div class="nav-btn" onclick="showScreen('settingsScreen', this)">
-⚙
-<span>Settings</span>
-</div>
-
+<div class="nav-btn active" onclick="showScreen('dashboard', this)">🏠<span>Dashboard</span></div>
+<div class="nav-btn" onclick="showScreen('socialScreen', this)">📡<span>Social</span></div>
+<div class="nav-btn" onclick="showScreen('profileScreen', this)">👤<span>Profile</span></div>
 </div>
 
 </div>
@@ -535,268 +463,115 @@ Auto Security Scan — ENABLED
 
 <script>
 
-/* SPLASH */
-
-const loadingTexts = [
+const loadingTexts=[
 'Initializing Secure Environment',
 'Loading Threat Analysis Engine',
 'Connecting Security Network',
-'Encrypting Monitoring Systems',
-'Activating AI Protection Layer'
+'Encrypting Monitoring Systems'
 ];
 
-let loadingIndex = 0;
+let loadingIndex=0;
 
 setInterval(()=>{
-
-document.getElementById('loadingText').innerText =
-loadingTexts[loadingIndex];
-
+document.getElementById('loadingText').innerText=loadingTexts[loadingIndex];
 loadingIndex++;
-
-if(loadingIndex >= loadingTexts.length){
-loadingIndex = 0;
-}
-
+if(loadingIndex>=loadingTexts.length){loadingIndex=0;}
 },1500);
 
 setTimeout(()=>{
-
 document.getElementById('splash').style.opacity='0';
-
 setTimeout(()=>{
 document.getElementById('splash').style.display='none';
 document.getElementById('app').style.display='block';
-initSystem();
-},1000);
-
-},5000);
-
-/* INIT */
-
-function initSystem(){
-
-loadUser();
-
 loadSocialAccounts();
+startTerminal();
+},1000);
+},4000);
 
-}
-
-/* SAVE USER */
-
-function saveUserData(){
-
-const user = {
-name:'Protected User'
-};
-
-localStorage.setItem('northUser', JSON.stringify(user));
-
-}
-
-/* LOAD USER */
-
-function loadUser(){
-
-const user = JSON.parse(localStorage.getItem('northUser'));
-
-if(user){
-
-document.getElementById('profileName').innerText =
-user.name;
-
-}
-
-}
-
-/* NAVIGATION */
-
-function showScreen(id, el){
-
-document.querySelectorAll('.screen').forEach(screen=>{
-screen.classList.remove('active');
-});
-
+function showScreen(id,el){
+document.querySelectorAll('.screen').forEach(screen=>screen.classList.remove('active'));
 document.getElementById(id).classList.add('active');
-
-document.querySelectorAll('.nav-btn').forEach(btn=>{
-btn.classList.remove('active');
-});
-
+document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));
 el.classList.add('active');
-
 }
-
-/* TOAST */
 
 function showNotification(text){
-
-const toast = document.getElementById('toast');
-
-toast.innerText = text;
-
+const toast=document.getElementById('toast');
+toast.innerText=text;
 toast.style.display='block';
-
-setTimeout(()=>{
-toast.style.display='none';
-},3000);
-
+setTimeout(()=>{toast.style.display='none';},3000);
 }
 
-/* SOCIAL ACCOUNTS */
-
 function loadSocialAccounts(){
-
-const container =
-document.getElementById('socialAccountsContainer');
-
-const accounts =
-JSON.parse(localStorage.getItem('northSocialAccounts')) || [];
-
+const container=document.getElementById('socialAccountsContainer');
+const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
 container.innerHTML='';
 
-if(accounts.length === 0){
-
-container.innerHTML = `
-<div class="social-item">
-<h3>No Accounts Connected</h3>
-<p style="margin-top:10px;color:#94A3B8;">
-Add accounts to enable monitoring.
-</p>
-</div>
-`;
-
+if(accounts.length===0){
+container.innerHTML=`<div class="social-item"><h3>No Accounts Connected</h3></div>`;
 return;
-
 }
 
 accounts.forEach((acc,index)=>{
-
-const statuses = [
-'Monitoring Active',
-'Credential Integrity Verified',
-'Suspicious Activity Blocked',
-'Encrypted Session Active'
-];
-
-const randomStatus =
-statuses[Math.floor(Math.random()*statuses.length)];
-
-container.innerHTML += `
-
+container.innerHTML+=`
 <div class="social-item">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:12px;
-">
-
 <h3>${acc.platform}</h3>
-
-<div class="status-green">
-CONNECTED
-</div>
-
-</div>
-
-<p>
-Login: ${acc.login}
-</p>
-
-<p class="status-green" style="margin-top:8px;">
-${randomStatus}
-</p>
-
-<button
-onclick="removeSocialAccount(${index})"
-style="
-margin-top:14px;
-background:rgba(239,68,68,.12);
-border:1px solid rgba(239,68,68,.2);
-color:#EF4444;
-padding:12px;
-border-radius:14px;
-width:100%;
-font-weight:600;
-">
-Remove Account
-</button>
-
-</div>
-
-`;
-
+<p>Login: ${acc.login}</p>
+<p class="status-green">Monitoring Active</p>
+<button onclick="removeSocialAccount(${index})" style="margin-top:12px;background:rgba(239,68,68,.12);color:#EF4444;">Remove Account</button>
+</div>`;
 });
-
 }
-
-/* ADD ACCOUNT */
 
 function addSocialAccount(){
+const platform=document.getElementById('socialPlatform').value;
+const login=document.getElementById('socialLogin').value;
+const password=document.getElementById('socialPassword').value;
 
-const platform =
-document.getElementById('socialPlatform').value;
-
-const login =
-document.getElementById('socialLogin').value;
-
-const password =
-document.getElementById('socialPassword').value;
-
-if(login === '' || password === ''){
-
+if(login===''||password===''){
 showNotification('Fill all fields');
-
 return;
-
 }
 
-const accounts =
-JSON.parse(localStorage.getItem('northSocialAccounts')) || [];
+const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
+accounts.push({platform,login,password});
+localStorage.setItem('northSocialAccounts',JSON.stringify(accounts));
 
-accounts.push({
-platform,
-login,
-password
-});
-
-localStorage.setItem(
-'northSocialAccounts',
-JSON.stringify(accounts)
-);
-
-document.getElementById('socialLogin').value='';
-document.getElementById('socialPassword').value='';
-
-showNotification(platform + ' account connected');
+showNotification(platform+' connected');
 
 loadSocialAccounts();
 
 }
-
-/* REMOVE ACCOUNT */
 
 function removeSocialAccount(index){
-
-const accounts =
-JSON.parse(localStorage.getItem('northSocialAccounts')) || [];
-
+const accounts=JSON.parse(localStorage.getItem('northSocialAccounts'))||[];
 accounts.splice(index,1);
-
-localStorage.setItem(
-'northSocialAccounts',
-JSON.stringify(accounts)
-);
-
-showNotification('Account removed');
-
+localStorage.setItem('northSocialAccounts',JSON.stringify(accounts));
 loadSocialAccounts();
+}
 
+const terminalMessages=[
+'AI engine analyzing behavior...',
+'Encrypted tunnel secured.',
+'Credential leak scan completed.',
+'Suspicious IP blocked.',
+'Deep packet inspection active.',
+'Threat neutralized successfully.'
+];
+
+function startTerminal(){
+const terminal=document.getElementById('terminal');
+setInterval(()=>{
+const line=document.createElement('div');
+line.className='terminal-line';
+line.innerHTML='> '+terminalMessages[Math.floor(Math.random()*terminalMessages.length)];
+terminal.appendChild(line);
+terminal.scrollTop=terminal.scrollHeight;
+if(terminal.children.length>18){terminal.removeChild(terminal.children[0]);}
+},1800);
 }
 
 </script>
-
 </body>
 </html>
+```
