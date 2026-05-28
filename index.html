@@ -1,912 +1,576 @@
-<!--
-========================================================
-NORTH PROTECTION — CLEAN MONITORING SETTINGS PATCH
-RESTORES ORIGINAL PREMIUM UI
-ONLY FIXES MONITORING CONFIGURATION SYSTEM
-========================================================
+<!-- =========================================================
+     MONITORING MODAL
+========================================================= -->
 
-INSTRUCTIONS:
+<div class="modal" id="accountModal">
 
-1. KEEP YOUR ORIGINAL APP.
-2. ADD THIS CODE BEFORE </body>
-3. DO NOT REMOVE ORIGINAL DASHBOARD.
-4. THIS PATCH ONLY FIXES:
-   - Multi-account support
-   - Monitoring settings
-   - Add/Edit/Remove accounts
-   - Premium modal system
-========================================================
--->
+<div class="modal-box">
 
-<!-- ====================================================
-MONITORING SETTINGS PANEL
-==================================================== -->
+<div class="modal-title">
+Add Monitored Account
+</div>
 
-<div class="np-monitoring-settings">
+<select id="platformInput">
+<option>Instagram</option>
+<option>Facebook</option>
+<option>TikTok</option>
+<option>Discord</option>
+<option>Telegram</option>
+<option>X/Twitter</option>
+<option>LinkedIn</option>
+<option>Snapchat</option>
+<option>WhatsApp</option>
+<option>Gmail</option>
+<option>Outlook</option>
+<option>Yahoo</option>
+</select>
 
-    <div class="np-settings-header">
-        <div>
-            <div class="np-settings-title">
-                Monitored Social Accounts
-            </div>
+<input type="text"
+id="usernameInput"
+placeholder="Username / Login">
 
-            <div class="np-settings-subtitle">
-                Manage protected accounts and monitoring preferences
-            </div>
-        </div>
+<input type="password"
+id="passwordInput"
+placeholder="Password">
 
-        <button class="np-add-account-btn" onclick="openNPModal()">
-            + Add Account
-        </button>
-    </div>
+<select id="monitorLevelInput">
+<option>Basic Monitoring</option>
+<option>Advanced Monitoring</option>
+<option>Deep Monitoring</option>
+</select>
 
-    <div id="npAccountsList" class="np-accounts-list"></div>
+<div class="modal-buttons">
+
+<button class="primary"
+onclick="saveMonitoredAccount()">
+Connect Account
+</button>
+
+<button class="secondary"
+onclick="closeAccountModal()">
+Cancel
+</button>
 
 </div>
 
-<!-- ====================================================
-MODAL
-==================================================== -->
-
-<div id="npModal" class="np-modal">
-
-    <div class="np-modal-box">
-
-        <div class="np-modal-header">
-
-            <div>
-                <div class="np-modal-title">
-                    Secure Account Connection
-                </div>
-
-                <div class="np-modal-subtitle">
-                    Configure monitoring and protection
-                </div>
-            </div>
-
-            <button class="np-close-btn" onclick="closeNPModal()">
-                ✕
-            </button>
-
-        </div>
-
-        <div class="np-form">
-
-            <select id="npPlatform">
-                <option>Instagram</option>
-                <option>Facebook</option>
-                <option>TikTok</option>
-                <option>X/Twitter</option>
-                <option>Discord</option>
-                <option>Telegram</option>
-                <option>Snapchat</option>
-                <option>LinkedIn</option>
-                <option>WhatsApp</option>
-                <option>Gmail</option>
-                <option>Outlook</option>
-                <option>Yahoo</option>
-            </select>
-
-            <input
-                type="text"
-                id="npUsername"
-                placeholder="Username / Login"
-            >
-
-            <input
-                type="password"
-                id="npPassword"
-                placeholder="Password"
-            >
-
-            <select id="npMonitoringLevel">
-                <option>Basic</option>
-                <option>Advanced</option>
-                <option>Deep Monitoring</option>
-            </select>
-
-            <div class="np-modal-actions">
-
-                <button
-                    class="np-connect-btn"
-                    onclick="saveNPAccount()"
-                >
-                    Connect Account
-                </button>
-
-                <button
-                    class="np-cancel-btn"
-                    onclick="closeNPModal()"
-                >
-                    Cancel
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 <style>
 
-/* ====================================================
-MONITORING SETTINGS
-==================================================== */
+/* =========================================================
+   MONITORING SETTINGS
+========================================================= */
 
-.np-monitoring-settings{
-    margin-top:24px;
-    padding:24px;
-    border-radius:24px;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.015)
-    );
-
-    border:1px solid rgba(255,255,255,.06);
-
-    backdrop-filter:blur(16px);
-
-    box-shadow:
-    0 10px 40px rgba(0,0,0,.25);
+.monitor-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+gap:12px;
+flex-wrap:wrap;
 }
 
-/* ====================================================
-HEADER
-==================================================== */
-
-.np-settings-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:16px;
-    flex-wrap:wrap;
+.add-account-btn{
+width:auto;
+padding:14px 18px;
+border-radius:16px;
+background:
+linear-gradient(135deg,
+rgba(37,99,235,.95),
+rgba(34,211,238,.95));
+color:white;
+font-weight:700;
+font-size:.92rem;
+box-shadow:
+0 10px 30px rgba(34,211,238,.25);
 }
 
-.np-settings-title{
-    font-size:1.2rem;
-    font-weight:700;
-    color:#F8FAFC;
+.add-account-btn:hover{
+transform:translateY(-2px);
 }
 
-.np-settings-subtitle{
-    color:#94A3B8;
-    margin-top:6px;
-    font-size:.9rem;
+.monitoring-title{
+font-size:1rem;
+font-weight:700;
+color:white;
 }
 
-/* ====================================================
-BUTTON
-==================================================== */
+/* =========================================================
+   ACCOUNT CARDS
+========================================================= */
 
-.np-add-account-btn{
-    border:none;
-    outline:none;
-    cursor:pointer;
-
-    padding:14px 22px;
-
-    border-radius:14px;
-
-    color:white;
-    font-weight:600;
-
-    background:
-    linear-gradient(
-        135deg,
-        #2563EB,
-        #22D3EE
-    );
-
-    box-shadow:
-    0 0 18px rgba(34,211,238,.25);
-
-    transition:.25s;
+.account-card{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:22px;
+padding:18px;
+margin-bottom:14px;
+position:relative;
+overflow:hidden;
 }
 
-.np-add-account-btn:active{
-    transform:scale(.97);
+.account-card::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.06),
+transparent 35%
+);
+pointer-events:none;
 }
 
-/* ====================================================
-ACCOUNT LIST
-==================================================== */
-
-.np-accounts-list{
-    margin-top:22px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+.account-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+gap:12px;
 }
 
-/* ====================================================
-ACCOUNT CARD
-==================================================== */
-
-.np-account-card{
-
-    padding:18px;
-
-    border-radius:20px;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.02)
-    );
-
-    border:1px solid rgba(255,255,255,.06);
-
-    position:relative;
-
-    overflow:hidden;
+.platform-tag{
+padding:6px 12px;
+border-radius:999px;
+background:rgba(34,211,238,.12);
+border:1px solid rgba(34,211,238,.25);
+font-size:.75rem;
+color:#22D3EE;
+font-weight:700;
+white-space:nowrap;
 }
 
-.np-account-card::before{
-    content:'';
-
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.04),
-        transparent 45%
-    );
-
-    pointer-events:none;
+.account-user{
+font-size:1rem;
+font-weight:700;
+margin-bottom:6px;
 }
 
-.np-card-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:14px;
+.account-info{
+font-size:.82rem;
+color:#94A3B8;
+margin-bottom:4px;
 }
 
-.np-platform{
-    font-weight:700;
-    color:#F8FAFC;
-    font-size:1rem;
+.account-status{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:12px;
+font-size:.82rem;
+color:#22C55E;
 }
 
-.np-user{
-    color:#94A3B8;
-    margin-top:4px;
-    font-size:.9rem;
+.account-actions{
+display:flex;
+gap:10px;
+margin-top:16px;
 }
 
-.np-status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    font-size:.8rem;
-    color:#22C55E;
+.small-btn{
+flex:1;
+padding:12px;
+border-radius:14px;
+font-size:.82rem;
+font-weight:700;
+border:none;
+cursor:pointer;
 }
 
-.np-status-dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#22C55E;
-
-    box-shadow:
-    0 0 12px #22C55E;
+.btn-edit{
+background:rgba(37,99,235,.15);
+color:#7DB2FF;
+border:1px solid rgba(37,99,235,.25);
 }
 
-/* ====================================================
-CARD INFO
-==================================================== */
-
-.np-card-info{
-    margin-top:16px;
-
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+.btn-remove{
+background:rgba(239,68,68,.12);
+color:#FF8A8A;
+border:1px solid rgba(239,68,68,.2);
 }
 
-.np-info-box{
-    padding:12px;
-    border-radius:14px;
+/* =========================================================
+   MODAL
+========================================================= */
 
-    background:
-    rgba(255,255,255,.03);
-
-    border:1px solid rgba(255,255,255,.04);
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.72);
+backdrop-filter:blur(10px);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:9999;
 }
 
-.np-info-label{
-    color:#94A3B8;
-    font-size:.78rem;
+.modal.active{
+display:flex;
+animation:fade .3s ease;
 }
 
-.np-info-value{
-    margin-top:6px;
-    color:white;
-    font-weight:600;
+.modal-box{
+width:100%;
+max-width:460px;
+background:
+linear-gradient(
+135deg,
+rgba(11,17,32,.95),
+rgba(5,5,5,.98)
+);
+border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:24px;
+box-shadow:
+0 20px 60px rgba(0,0,0,.7);
+position:relative;
+overflow:hidden;
 }
 
-/* ====================================================
-ACTIONS
-==================================================== */
-
-.np-actions{
-    display:flex;
-    gap:10px;
-    margin-top:16px;
-    flex-wrap:wrap;
+.modal-box::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.06),
+transparent 35%
+);
+pointer-events:none;
 }
 
-.np-actions button{
-    flex:1;
-    min-width:110px;
-
-    border:none;
-    cursor:pointer;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    color:white;
-
-    background:
-    rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.06);
-
-    transition:.2s;
+.modal-title{
+font-size:1.3rem;
+font-weight:700;
+margin-bottom:18px;
 }
 
-.np-actions button:active{
-    transform:scale(.97);
+.modal-buttons{
+display:flex;
+gap:12px;
+margin-top:10px;
 }
 
-/* ====================================================
-MODAL
-==================================================== */
-
-.np-modal{
-    position:fixed;
-    inset:0;
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-    rgba(0,0,0,.7);
-
-    backdrop-filter:blur(10px);
-
-    z-index:99999;
+.modal-buttons button{
+flex:1;
 }
 
-.np-modal-box{
-
-    width:100%;
-    max-width:440px;
-
-    border-radius:28px;
-
-    overflow:hidden;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(11,17,32,.96),
-        rgba(5,5,5,.96)
-    );
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-    0 0 40px rgba(34,211,238,.18);
-
-    animation:npModalIn .28s ease;
-}
-
-@keyframes npModalIn{
-
-    from{
-        opacity:0;
-        transform:translateY(20px) scale(.96);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-
-}
-
-.np-modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:22px;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.05);
-}
-
-.np-modal-title{
-    font-size:1.1rem;
-    font-weight:700;
-    color:white;
-}
-
-.np-modal-subtitle{
-    margin-top:4px;
-    color:#94A3B8;
-    font-size:.85rem;
-}
-
-.np-close-btn{
-    background:none;
-    border:none;
-    color:#94A3B8;
-    font-size:1.2rem;
-    cursor:pointer;
-}
-
-/* ====================================================
-FORM
-==================================================== */
-
-.np-form{
-    padding:22px;
-
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-}
-
-.np-form input,
-.np-form select{
-
-    width:100%;
-
-    border:none;
-    outline:none;
-
-    padding:15px;
-
-    border-radius:14px;
-
-    color:white;
-
-    background:
-    rgba(255,255,255,.04);
-
-    border:
-    1px solid rgba(255,255,255,.05);
-}
-
-.np-modal-actions{
-    display:flex;
-    gap:12px;
-    margin-top:10px;
-}
-
-.np-connect-btn{
-    flex:1;
-
-    border:none;
-    cursor:pointer;
-
-    padding:14px;
-
-    border-radius:14px;
-
-    color:white;
-    font-weight:600;
-
-    background:
-    linear-gradient(
-        135deg,
-        #2563EB,
-        #22D3EE
-    );
-}
-
-.np-cancel-btn{
-    flex:1;
-
-    border:none;
-    cursor:pointer;
-
-    padding:14px;
-
-    border-radius:14px;
-
-    color:white;
-
-    background:
-    rgba(255,255,255,.05);
-}
-
-/* ====================================================
-MOBILE
-==================================================== */
-
-@media(max-width:700px){
-
-    .np-card-info{
-        grid-template-columns:1fr;
-    }
-
-    .np-actions{
-        flex-direction:column;
-    }
-
+.secondary{
+background:rgba(255,255,255,.06);
+color:white;
+border:1px solid rgba(255,255,255,.08);
 }
 
 </style>
 
 <script>
 
-/* ====================================================
-NORTH PROTECTION
-MONITORING SETTINGS SYSTEM
-==================================================== */
+/* =========================================================
+   CREATE SETTINGS MONITORING SECTION
+========================================================= */
 
-let npAccounts =
+window.addEventListener('load', ()=>{
+
+const settingsCard =
+document.querySelector('#settingsScreen .card');
+
+if(settingsCard){
+
+settingsCard.innerHTML += `
+
+<div style="margin-top:26px;">
+
+<div class="monitor-header">
+
+<div class="monitoring-title">
+Monitored Social Accounts
+</div>
+
+<button class="add-account-btn"
+onclick="openAccountModal()">
++ Add Account
+</button>
+
+</div>
+
+<div id="accountsList"></div>
+
+</div>
+
+`;
+
+}
+
+renderAccounts();
+
+});
+
+/* =========================================================
+   MONITORED ACCOUNTS SYSTEM
+========================================================= */
+
+let monitoredAccounts =
 JSON.parse(
-localStorage.getItem('np_monitored_accounts')
+localStorage.getItem('northAccounts')
 ) || [];
 
-let npEditId = null;
+/* =========================================================
+   OPEN MODAL
+========================================================= */
 
-/* ====================================================
-OPEN/CLOSE MODAL
-==================================================== */
+function openAccountModal(){
 
-function openNPModal(){
-
-    document
-    .getElementById('npModal')
-    .style.display='flex';
+document
+.getElementById('accountModal')
+.classList.add('active');
 
 }
 
-function closeNPModal(){
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
 
-    document
-    .getElementById('npModal')
-    .style.display='none';
+function closeAccountModal(){
 
-    clearNPForm();
-}
-
-/* ====================================================
-CLEAR FORM
-==================================================== */
-
-function clearNPForm(){
-
-    npEditId = null;
-
-    document.getElementById('npUsername').value='';
-    document.getElementById('npPassword').value='';
+document
+.getElementById('accountModal')
+.classList.remove('active');
 
 }
 
-/* ====================================================
-SAVE ACCOUNT
-==================================================== */
+/* =========================================================
+   SAVE ACCOUNT
+========================================================= */
 
-function saveNPAccount(){
+function saveMonitoredAccount(){
 
-    const platform =
-    document.getElementById('npPlatform').value;
+const platform =
+document.getElementById('platformInput').value;
 
-    const username =
-    document.getElementById('npUsername').value;
+const username =
+document.getElementById('usernameInput').value;
 
-    const password =
-    document.getElementById('npPassword').value;
+const password =
+document.getElementById('passwordInput').value;
 
-    const level =
-    document.getElementById('npMonitoringLevel').value;
+const level =
+document.getElementById('monitorLevelInput').value;
 
-    if(!username || !password){
-        return;
-    }
+if(
+username.trim()==='' ||
+password.trim()===''
+){
 
-    const account = {
+showNotification(
+'Insert login credentials'
+);
 
-        id: npEditId || Date.now(),
-
-        platform,
-        username,
-        password,
-        level,
-
-        active:true,
-
-        lastScan:
-        new Date().toLocaleString()
-
-    };
-
-    if(npEditId){
-
-        npAccounts =
-        npAccounts.map(acc =>
-            acc.id === npEditId
-            ? account
-            : acc
-        );
-
-    }else{
-
-        npAccounts.push(account);
-
-    }
-
-    localStorage.setItem(
-        'np_monitored_accounts',
-        JSON.stringify(npAccounts)
-    );
-
-    renderNPAccounts();
-
-    closeNPModal();
+return;
 
 }
 
-/* ====================================================
-RENDER ACCOUNTS
-==================================================== */
+const account = {
 
-function renderNPAccounts(){
+id:Date.now(),
 
-    const container =
-    document.getElementById('npAccountsList');
+platform,
+username,
+password,
+level,
 
-    if(!container) return;
+status:'Monitoring Active',
 
-    container.innerHTML='';
+lastScan:
+new Date().toLocaleTimeString()
 
-    npAccounts.forEach(account => {
+};
 
-        const masked =
-        '•'.repeat(
-            Math.max(6, account.password.length)
-        );
+monitoredAccounts.push(account);
 
-        container.innerHTML += `
+localStorage.setItem(
+'northAccounts',
+JSON.stringify(monitoredAccounts)
+);
 
-        <div class="np-account-card">
+renderAccounts();
 
-            <div class="np-card-top">
+closeAccountModal();
 
-                <div>
+showNotification(
+platform + ' monitoring enabled'
+);
 
-                    <div class="np-platform">
-                        ${getPlatformIcon(account.platform)}
-                        ${account.platform}
-                    </div>
+document.getElementById(
+'usernameInput'
+).value='';
 
-                    <div class="np-user">
-                        ${account.username}
-                    </div>
-
-                </div>
-
-                <div class="np-status">
-
-                    <div class="np-status-dot"></div>
-
-                    ${
-                        account.active
-                        ? 'PROTECTED'
-                        : 'PAUSED'
-                    }
-
-                </div>
-
-            </div>
-
-            <div class="np-card-info">
-
-                <div class="np-info-box">
-
-                    <div class="np-info-label">
-                        Password
-                    </div>
-
-                    <div class="np-info-value">
-                        ${masked}
-                    </div>
-
-                </div>
-
-                <div class="np-info-box">
-
-                    <div class="np-info-label">
-                        Monitoring
-                    </div>
-
-                    <div class="np-info-value">
-                        ${account.level}
-                    </div>
-
-                </div>
-
-                <div class="np-info-box">
-
-                    <div class="np-info-label">
-                        Last Scan
-                    </div>
-
-                    <div class="np-info-value">
-                        ${account.lastScan}
-                    </div>
-
-                </div>
-
-                <div class="np-info-box">
-
-                    <div class="np-info-label">
-                        Protection
-                    </div>
-
-                    <div class="np-info-value">
-                        Active Shield
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="np-actions">
-
-                <button onclick="editNPAccount(${account.id})">
-                    Edit
-                </button>
-
-                <button onclick="toggleNPAccount(${account.id})">
-                    ${
-                        account.active
-                        ? 'Pause Monitoring'
-                        : 'Enable Monitoring'
-                    }
-                </button>
-
-                <button onclick="removeNPAccount(${account.id})">
-                    Remove
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
+document.getElementById(
+'passwordInput'
+).value='';
 
 }
 
-/* ====================================================
-EDIT
-==================================================== */
+/* =========================================================
+   RENDER ACCOUNTS
+========================================================= */
 
-function editNPAccount(id){
+function renderAccounts(){
 
-    const acc =
-    npAccounts.find(a => a.id === id);
+const container =
+document.getElementById('accountsList');
 
-    if(!acc) return;
+if(!container) return;
 
-    npEditId = id;
+container.innerHTML='';
 
-    document.getElementById('npPlatform').value =
-    acc.platform;
+if(monitoredAccounts.length===0){
 
-    document.getElementById('npUsername').value =
-    acc.username;
+container.innerHTML = `
 
-    document.getElementById('npPassword').value =
-    acc.password;
+<div class="account-card">
 
-    document.getElementById('npMonitoringLevel').value =
-    acc.level;
+<div class="account-info">
+No monitored accounts connected.
+</div>
 
-    openNPModal();
+</div>
 
-}
+`;
 
-/* ====================================================
-REMOVE
-==================================================== */
-
-function removeNPAccount(id){
-
-    npAccounts =
-    npAccounts.filter(a => a.id !== id);
-
-    localStorage.setItem(
-        'np_monitored_accounts',
-        JSON.stringify(npAccounts)
-    );
-
-    renderNPAccounts();
+return;
 
 }
 
-/* ====================================================
-TOGGLE
-==================================================== */
+monitoredAccounts.forEach(account=>{
 
-function toggleNPAccount(id){
+container.innerHTML += `
 
-    npAccounts =
-    npAccounts.map(acc => {
+<div class="account-card">
 
-        if(acc.id === id){
+<div class="account-top">
 
-            acc.active = !acc.active;
+<div>
 
-        }
+<div class="account-user">
+${account.username}
+</div>
 
-        return acc;
+<div class="account-info">
+${account.platform}
+</div>
 
-    });
+</div>
 
-    localStorage.setItem(
-        'np_monitored_accounts',
-        JSON.stringify(npAccounts)
-    );
+<div class="platform-tag">
+${account.level}
+</div>
 
-    renderNPAccounts();
+</div>
+
+<div class="account-info">
+Password:
+••••••••••
+</div>
+
+<div class="account-info">
+Last Scan:
+${account.lastScan}
+</div>
+
+<div class="account-status">
+
+<div class="dot"></div>
+
+${account.status}
+
+</div>
+
+<div class="account-actions">
+
+<button
+class="small-btn btn-edit"
+onclick="editAccount(${account.id})">
+Edit
+</button>
+
+<button
+class="small-btn btn-remove"
+onclick="removeAccount(${account.id})">
+Remove
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
 
 }
 
-/* ====================================================
-PLATFORM ICONS
-==================================================== */
+/* =========================================================
+   REMOVE ACCOUNT
+========================================================= */
 
-function getPlatformIcon(platform){
+function removeAccount(id){
 
-    const icons = {
+monitoredAccounts =
+monitoredAccounts.filter(
+account => account.id !== id
+);
 
-        Instagram:'📸',
-        Facebook:'📘',
-        TikTok:'🎵',
-        'X/Twitter':'✖️',
-        Discord:'🎮',
-        Telegram:'📨',
-        Snapchat:'👻',
-        LinkedIn:'💼',
-        WhatsApp:'💬',
-        Gmail:'✉️',
-        Outlook:'📧',
-        Yahoo:'📩'
+localStorage.setItem(
+'northAccounts',
+JSON.stringify(monitoredAccounts)
+);
 
-    };
+renderAccounts();
 
-    return icons[platform] || '🔐';
+showNotification(
+'Monitoring removed'
+);
 
 }
 
-/* ====================================================
-INIT
-==================================================== */
+/* =========================================================
+   EDIT ACCOUNT
+========================================================= */
 
-renderNPAccounts();
+function editAccount(id){
+
+const account =
+monitoredAccounts.find(
+a => a.id === id
+);
+
+if(!account) return;
+
+document.getElementById(
+'platformInput'
+).value = account.platform;
+
+document.getElementById(
+'usernameInput'
+).value = account.username;
+
+document.getElementById(
+'passwordInput'
+).value = account.password;
+
+document.getElementById(
+'monitorLevelInput'
+).value = account.level;
+
+removeAccount(id);
+
+openAccountModal();
+
+}
 
 </script>
